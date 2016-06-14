@@ -17,7 +17,7 @@
 			scope.inputs={
 					place:'请选择',
 					type:'请选择',
-					choice:[]
+					businessEntrust:[]
 				};
 		}
 		function initPage(scope){
@@ -46,17 +46,27 @@
 		}
 		function choiceRemember(json,scope){
 			for(var i in json)
-				if(json[i])
-					scope.inputs.choice.push(i);
-				console.log(scope);
-		}
+					if(json[i])
+						if(i =='cancel')
+							scope.inputs.businessEntrust.push(1);
+						else if(i == 'transfer')
+							scope.inputs.businessEntrust.push(2);
+						else if(i == 'get')
+							scope.inputs.businessEntrust.push(3);
+						else
+							scope.inputs.businessEntrust.push(4);
+		}					
 		return{
 			judge: function(json,scope){
 				if(choiceIsEmpty(json))
 				{
 					choiceRemember(json,scope);
-					if(json.transfer)
+					scope.inputs.certificateType=1;
+					scope.formEntrust = "全权委托";
+					if(json.transfer){	
+						scope.inputs.sellerCertificateType=1;
 						mySwiper.slideTo(2, 200, false);
+					}		
 					else
 						mySwiper.slideTo(1, 200, false);
 					window.scroll(0,0);
@@ -85,12 +95,9 @@
 					"formEntrust": "全权委托"
 				}
 		return{
-			post:function(){
-				$http({
-					method:'POST',
-					url:'/orderSubmit',
-					params:data
-				}).success(function(data,header,config,status){
+			post:function(scope){
+				console.log(scope.inputs);
+				$http.post('/orderSubmit',scope.inputs).success(function(data,header,config,status){
 					console.log(data);
 
 				}).error(function(data,header,config,status){
@@ -104,6 +111,7 @@
 		return{
 			init:function(scope){
 					scope.infoInput= function(data){
+						console.log(data);
 					infoInput.judge(data,this);	
 					}
 					scope.backToChoose = function(){
@@ -132,7 +140,7 @@
 						window.scroll(0,0);
 					}
 					scope.submit = function(data){
-						ngAjax.post();
+						ngAjax.post(scope);
 					}
 			}
 		}

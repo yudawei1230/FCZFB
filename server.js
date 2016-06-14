@@ -1,35 +1,86 @@
 var http = require('http');
 var fs = require('fs');
 var url = require('url');
-
-
-// 创建服务器
+var data=[];
+var dataName=[{
+               "personName":"张三",
+               "phoneNumber": "18888888888",
+               "certificateType":"1",
+               "certificateNo":"123456789123456789",               
+               "sellerName":"李四",
+               "sellerPhoneNumber": "17777777777",
+               "sellerCertificateType":"1",
+               "sellerCertificateNo":"123456789123456789", 
+               "houseAddress":"深圳市",
+               "houseName": "AAA",
+               "ownershipType":"bbb",
+               "ownershipNo":"123456",
+               "businessEntrust":"1,2,3,4",
+               "formEntrust": "全权委托"
+            },{
+               "personName":"张三",
+               "phoneNumber": "18888888888",
+               "certificateType":"1",
+               "certificateNo":"123456789123456789",              
+               "houseAddress":"深圳市",
+               "houseName": "AAA",
+               "ownershipType":"bbb",
+               "ownershipNo":"123456",          
+               "businessEntrust":"1,2,3,4",
+               "formEntrust": "全权委托"
+            }];
 http.createServer( function (request, response) {  
-   response.writeHead(200,{'Content-Type':'text/html'});
-   response.write('your request responsed successfully');
-   response.end();
-   // 解析请求，包括文件名
-   //var pathname = url.parse(request.url).pathname;
-   
-   // 输出请求的文件名
-   //console.log("Request for " + pathname + " received.");
-   
-/*   // 从文件系统中读取请求的文件内容
-   fs.readFile(pathname.substr(1), function (err, data) {
+
+   function file(request,response,src){
+   fs.readFile(src, function (err, data) {
       if (err) {
-         console.log(err);
-         // HTTP 状态码: 404 : NOT FOUND
-         // Content Type: text/plain
+         //console.log(err);
          response.writeHead(404, {'Content-Type': 'text/html'});
-      }else{	         
-         // HTTP 状态码: 200 : OK
-         // Content Type: text/plain
-         response.writeHead(200, {'Content-Type': 'text/html'});	
-         
-         // 响应文件内容
-         response.write(data.toString());		
+      }else{            
+         response.writeHead(200, {'Content-Type': 'text/html'});  
+         response.write(data.toString());    
       }
-      //  发送响应数据
       response.end();
-   }); */  
+   });  
+   }
+   function postdata(request,response,next){
+         var postData='';
+         request.setEncoding("utf8");
+         request.addListener("data", function(postDataChunk) {
+            postData += postDataChunk;
+         });
+         request.addListener("end", function() {
+            request.body = JSON.parse(postData);
+            next();
+         });
+   }
+   if(request.url.indexOf('.')!=-1)
+      file(request,response,request.url.substr(1));
+   else if(request.url.indexOf('?')!=-1)
+      postdata(request,response,function(){
+         console.log(request.query)
+      });
+   else if(request.url.indexOf('index')!=-1)
+      file(request,response,'index.html');
+   else
+      postdata(request,response,function(){
+         if(request.body.sellerCertificateType)
+            var type =0;
+         else
+            var type =1;
+            for(var i in dataName[type]){
+               if(!request.body[i])
+               {
+                  response.writeHead(404, {'Content-Type': 'text/html'});
+                  response.write('false');
+                  response.end();
+               }
+            }
+         data.push(request.body);
+         response.writeHead(200, {'Content-Type': 'text/html'});
+         response.write('true');
+         response.end();
+      });
+   
+ 
 }).listen(200);

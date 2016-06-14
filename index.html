@@ -62,13 +62,13 @@
 				<div class="swiper-slide">
 					<div class="weui_cells weui_cells_form">
 					<div class="weui_cells weui_cells_form">
-			            <cell title='预约人姓名' model='inputs.buyName'></cell>
-			            <cell title='手机' model='inputs.buyPhone'></cell>
-			            <cell title='身份证号码' model='inputs.buyIdentification'></cell>
-						<cells title='房地产所在地' bind='inputs.place' click='choosePlace(1)'></cells>
+			            <cell title='预约人姓名' model='inputs.personName'></cell>
+			            <cell title='手机' model='inputs.phoneNumber'></cell>
+			            <cell title='身份证号码' model='inputs.certificateNo'></cell>
+						<cells title='房地产所在地' bind='inputs.houseAddress' click='choosePlace(1)'></cells>
 						<cell title='房地产名称' model='inputs.houseName'></cell>
-						<cells title='权属证明类型' bind='inputs.type' click='chooseType(1)'></cells>
-						<cell title='权属证明编号' model='inputs.houseNum'></cell>
+						<cells title='权属证明类型' bind='inputs.ownershipType' click='chooseType(1)'></cells>
+						<cell title='权属证明编号' model='inputs.ownershipNo'></cell>
 			        </div>
 			        </div>
 			    	<div class="bd spacing" ng-click='submit(this.inputs)'>
@@ -81,20 +81,20 @@
 				<!-- 过户资料输入页 -->
 				<div class="swiper-slide">
 					<div class='type'>
-						<cell title='买方姓名' model='inputs.buyName'></cell>
-						<cell title='买方手机' model='inputs.buyPhone'></cell>
-						<cell title='买方身份证号码' model='inputs.buyIdentification'></cell>
+						<cell title='买方姓名' model='inputs.personName'></cell>
+						<cell title='买方手机' model='inputs.phoneNumber'></cell>
+						<cell title='买方身份证号码' model='inputs.certificateNo'></cell>
 					</div>
 					<div class='type'>
-						<cell title='卖方姓名' model='inputs.sellName'></cell>
-						<cell title='卖方手机' model='inputs.sellPhone'></cell>
-						<cell title='卖方身份证号码' model='inputs.sellIdentification'></cell> 
+						<cell title='卖方姓名' model='inputs.sellerName'></cell>
+						<cell title='卖方手机' model='inputs.sellerPhoneNumber'></cell>
+						<cell title='卖方身份证号码' model='inputs.sellerCertificateNo'></cell> 
 					</div>
 					<div class='type'>
-						<cells title='房地产所在地' bind='inputs.place' click='choosePlace(2)'></cells>
+						<cells title='房地产所在地' bind='inputs.houseAddress' click='choosePlace(2)'></cells>
 						<cell title='房地产名称' model='inputs.houseName'></cell>
-						<cells title='权属证明类型' bind='inputs.type' click='chooseType(2)'></cells>
-						<cell title='权属证明编号' model='inputs.houseNum'></cell>
+						<cells title='权属证明类型' bind='inputs.ownershipType' click='chooseType(2)'></cells>
+						<cell title='权属证明编号' model='inputs.ownershipNo'></cell>
 			        </div>
 			    	<div class="bd spacing" ng-click='submit(this.inputs)'>
 			    		<a class="weui_btn weui_btn_primary next" style='margin-top:10%'>提交</a>
