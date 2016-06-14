@@ -1,0 +1,151 @@
+<html ng-app='myapp'>
+	<head>
+		<title>订单查询</title>
+		<meta charset='utf-8'>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    	<link rel="stylesheet" href="css/weui.min.css"/>
+    	<link rel="stylesheet" href="css/swiper.min.css">
+		<link rel="stylesheet" href="css/orderCheck.css">
+	</head>
+	<body ontouchstart='' ng-controller='myctrl'>
+		<div class="swiper-container">
+			<div class="swiper-wrapper" style='height:initial'>
+		      	<div class="weui_cells weui_cells_access swiper-slide">
+			            <a class="weui_cell order_Cell" id = '{{detail.orderNum}}' ng-click='orderDetail(this)'  ng-repeat='detail in details'>
+			                <div class="weui_cell_bd weui_cell_primary type">
+		            			<article>
+									<p>订单号： {{detail.orderNum}}</p>
+									<p>预约人姓名： {{detail.name}}</p>
+									<p>业务类型： {{detail.type}}</p>
+								</article>
+								<div class="status{{detail.status}}">
+									<p ng-bind = 'detail.statusText'></p>
+								</div>
+			                </div>
+			                <div class="weui_cell_ft"></div>
+			            </a>
+		    	</div>
+		      	<div class="weui_cells weui_cells_access swiper-slide">
+					<div class="bd">
+	        			<div class="weui_cells">
+            				<div class="weui_cell">
+				                <div class="weui_cell_bd weui_cell_primary">
+				                    <p>订单号</p>
+				                </div>
+				                <div class='detailNum'>
+									<div class="status{{detail.status}}">
+										<p ng-bind = 'detail.statusText'></p>
+									</div>
+				                	<div class="grey_font" ng-bind='detail.orderNum'></div>
+				                </div> 
+				           		</div>
+				            <div class="weui_cell">
+				                <div class="weui_cell_bd weui_cell_primary">
+				                    <p>预约人姓名</p>
+				                </div>
+				                <div class="grey_font" ng-bind='detail.name'></div>
+				            </div>
+				            <div class="weui_cell">
+				                <div class="weui_cell_bd weui_cell_primary">
+				                    <p>委托业务</p>
+				                </div>
+				                <p class="grey_font" ng-bind='detail.type'></p>
+				            </div>
+				            <div class="weui_cell">
+				                <div class="weui_cell_bd weui_cell_primary">
+				                    <p>委托形式</p>
+				                </div>
+				                <div class="grey_font" ng-bind='detail.helpType'></div>
+				            </div>
+				            <div class="weui_cell">
+				                <div class="weui_cell_bd weui_cell_primary">
+				                    <p>手机号码</p>
+				                </div>
+				                <div class="grey_font" ng-bind='detail.phone'></div>
+				            </div>
+				            <div class="weui_cell">
+				                <div class="weui_cell_bd weui_cell_primary">
+				                    <p>身份证号码</p>
+				                </div>
+				                <div class="grey_font" ng-bind='detail.identification'></div>
+				            </div>
+				            <div class="weui_cell">
+			               		 <div class="weui_cell_bd weui_cell_primary">
+				                    <p>房地产所在区</p>
+				                </div>
+				                <div class="grey_font" ng-bind='detail.housePlace'></div>
+				            </div>
+				            <div class="weui_cell">
+				                <div class="weui_cell_bd weui_cell_primary">
+				                    <p>房地产名称</p>
+				                </div>
+				                <div class="grey_font" ng-bind='detail.houseName'></div>
+				            </div>
+				            <div class="weui_cell">
+				                <div class="weui_cell_bd weui_cell_primary">
+				                    <p>权属证明编号</p>
+				                </div>
+				                <div class="grey_font" ng-bind='detail.idNum'></div>
+				            </div>
+			                <div class="weui_cells weui_cells_access">
+					            <a class="weui_cell" ng-click='scheduleCheck(this)'>
+					                <div class="weui_cell_bd weui_cell_primary">
+					                    <p>业务办理进度</p>
+					                </div>
+					                <div class="weui_cell_ft"></div>
+					            </a>
+			        		</div>
+    					</div>
+				    	<div class="bd spacing">
+		    					<a href="javascript:mySwiper.slidePrev();window.scrollTo(0,0);" class="weui_btn weui_btn_primary next">返回</a>
+						</div>
+					</div>
+		    	</div>
+		    	<div class="weui_cells weui_cells_access swiper-slide">
+					<div class="bd">
+						<div class="weui_cells">
+							<div class="weui_cell">
+				                <div class="weui_cell_bd weui_cell_primary" style='color:#888'>
+				                    <p>订单号</p>
+				                    <p>预约人姓名</p>
+				                </div>
+				                <div class="">
+				                	<p ng-bind='detail.orderNum'></p>
+				                	<p ng-bind='detail.name'></p>
+				                </div>
+							</div>
+						</div>
+						<div class="weui_cells schedule_cells {{scheduleClass[0]}}">
+							<i class='weui_icon_circle'></i>
+							<div class="weui_cell schedule_cell">
+							<div class="weui_articel">
+								<section>
+									<p>电话确认业务办理时间</p>
+									<p>服务经理电话： 18888888888</p>
+								</section>
+							</div>
+							</div>
+						</div>
+						<div class="weui_cells schedule_cells {{scheduleClass[1]}}" artical ifshow='true' num="1"></div>	
+						<div class="weui_cells schedule_cells {{scheduleClass[2]}}" artical ifshow='true' num="2"></div>
+						<div class="weui_cells schedule_cells {{scheduleClass[3]}}" artical ifshow='false' num="3"></div>	
+						<div class="weui_cells schedule_cells {{scheduleClass[4]}}" artical ifshow='true' num="4"></div>	
+						<div class="weui_cells schedule_cells {{scheduleClass[5]}}" artical ifshow='false' num="5"></div>
+						<div class="weui_cells schedule_cells {{scheduleClass[6]}}" artical ifshow='true' num="6"></div>	
+						<div class="weui_cells schedule_cells {{scheduleClass[7]}}" artical ifshow='true' num="7"></div>
+						<div class="weui_cells schedule_cells {{scheduleClass[8]}}" artical ifshow='false' num="8"></div>			
+						<div class="weui_cells schedule_cells {{scheduleClass[9]}}" artical ifshow='true' num="9"></div>
+						<div class="weui_cells schedule_cells {{scheduleClass[10]}}" artical ifshow='false' num="10"></div>
+						<div class="weui_cells schedule_cells {{scheduleClass[11]}}" artical ifshow='true' num="11"></div>
+				    	<div class="bd spacing">
+		    					<a href="javascript:mySwiper.slidePrev();window.scrollTo(0,0);" class="weui_btn weui_btn_primary next">返回</a>
+						</div>
+					</div>
+					</div>
+		    	</div>
+		</div>
+		<script src='js/angular.min.js'></script>
+		<script src='js/swiper.min.js'></script>
+		<script src='js/orderCheck.js'></script>
+	</body>
+</html>

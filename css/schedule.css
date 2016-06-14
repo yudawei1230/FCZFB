@@ -1,0 +1,42 @@
+html *{
+	padding:0px;
+	margin:0px;
+}
+body{
+	background-color: #fbf9fe;
+	margin-top: 20px;
+}
+.btn_status{
+
+	padding-top: 2px !important;
+	padding-bottom: 2px !important;
+}
+.type{
+	display:flex;
+	justify-content: space-between;
+}
+.undo{
+	color : #BEC3C8;
+}
+.schedule_cell{
+	border-top:none;
+	border-bottom:none;
+	border-right:none;
+	border-left: 1px solid #d9d9d9;
+	padding-left: 1rem;
+	margin-left: 2rem;
+}
+.schedule_cells{
+	display:flex;
+	justify-content: left;
+	align-items: center;
+}
+.line{
+	border:1px solid black;
+	display: block;
+	width:0px;
+	height:2000px;
+	position:fixed;
+	left:11px;
+	z-index:1;
+}

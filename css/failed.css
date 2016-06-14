@@ -1,0 +1,18 @@
+html *{
+	padding:0px;
+	margin:0px;
+}
+body{
+	background-color: #fbf9fe;
+	margin-top: 10%;
+}
+article{
+	text-align: center;
+}
+.next{
+	position: fixed;
+	left:0px;
+	right:0px;
+	bottom: 5%;
+	width: 90%;
+}

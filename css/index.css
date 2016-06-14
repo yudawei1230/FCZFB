@@ -1,0 +1,25 @@
+html *{
+	padding:0px;
+	margin:0px;
+}
+body{
+	background-color: #fbf9fe;
+	padding-top: 2rem;
+}
+.page_title{
+	text-align:center;
+	margin: 3% 0;
+	font-size: 20px;
+}
+.next{
+	width: 90%;
+}
+.infoLabel{
+	width: 7rem !important;
+	padding-right: 1rem;
+}
+.type{
+	margin-bottom: 15px;
+	border: 1px solid #d9d9d9;
+}
+

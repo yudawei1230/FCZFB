@@ -1,0 +1,17 @@
+html *{
+	padding:0px;
+	margin:0px;
+}
+body{
+	background-color: #fbf9fe;
+}
+label{
+	width: 6em !important;
+}
+.next{
+	position: fixed;
+	left:0px;
+	right:0px;
+	bottom: 5%;
+	width: 90%;
+}
