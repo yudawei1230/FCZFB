@@ -1,86 +1,123 @@
 var http = require('http');
 var fs = require('fs');
 var url = require('url');
-var data=[];
 var dataName=[{
-               "personName":"张三",
-               "phoneNumber": "18888888888",
-               "certificateType":"1",
-               "certificateNo":"123456789123456789",               
-               "sellerName":"李四",
-               "sellerPhoneNumber": "17777777777",
-               "sellerCertificateType":"1",
-               "sellerCertificateNo":"123456789123456789", 
-               "houseAddress":"深圳市",
-               "houseName": "AAA",
-               "ownershipType":"bbb",
-               "ownershipNo":"123456",
-               "businessEntrust":"1,2,3,4",
-               "formEntrust": "全权委托"
+               "personName":"",
+               "phoneNumber": "",
+               "certificateType":"",
+               "certificateNo":"",               
+               "sellerName":"",
+               "sellerPhoneNumber": "",
+               "sellerCertificateType":"",
+               "sellerCertificateNo":"", 
+               "houseAddress":"",
+               "houseName": "",
+               "ownershipType":"",
+               "ownershipNo":"",
+               "businessEntrust":"",
+               "formEntrust": ""
             },{
-               "personName":"张三",
-               "phoneNumber": "18888888888",
-               "certificateType":"1",
-               "certificateNo":"123456789123456789",              
-               "houseAddress":"深圳市",
-               "houseName": "AAA",
-               "ownershipType":"bbb",
-               "ownershipNo":"123456",          
-               "businessEntrust":"1,2,3,4",
-               "formEntrust": "全权委托"
+               "personName":"",
+               "phoneNumber": "",
+               "certificateType":"",
+               "certificateNo":"",              
+               "houseAddress":"",
+               "houseName": "",
+               "ownershipType":"",
+               "ownershipNo":"",          
+               "businessEntrust":"",
+               "formEntrust": ""
             }];
 http.createServer( function (request, response) {  
 
    function file(request,response,src){
    fs.readFile(src, function (err, data) {
       if (err) {
-         //console.log(err);
          response.writeHead(404, {'Content-Type': 'text/html'});
+         response.end();
       }else{            
-         response.writeHead(200, {'Content-Type': 'text/html'});  
-         response.write(data.toString());    
+         response.writeHead(200, {'Content-Type': 'text/html'});
+         if(src =='js/orderCheck.js')  
+            fs.readFile('js/orderData.js',function(errs,datas){
+               response.write('var data =['+datas+'];'+data.toString());  
+               response.end();  
+            });
+         else{
+            response.write(data.toString()); 
+            response.end();
+         }
+               
       }
-      response.end();
+      
    });  
    }
-   function postdata(request,response,next){
+   function validate(request,type){
+         for(var i in dataName[type]){
+            if(!request.body[i])
+               return false;
+            else if(request.body[i]=='')
+               return false;
+         }
+         return true;
+   }
+   function postdata(request,response){
          var postData='';
          request.setEncoding("utf8");
          request.addListener("data", function(postDataChunk) {
             postData += postDataChunk;
          });
-         request.addListener("end", function() {
+         request.addListener("end", function(next) {
             request.body = JSON.parse(postData);
-            next();
+            if(request.body){
+               if(request.body.sellerCertificateType)
+                  var type =0;
+               else
+                  var type =1;
+               if(validate(request,type)){
+                  request.body.businessEntrust.split(',').forEach(function(item,index){
+                     if(item==1)
+                        request.body.cancelStatus= Math.round(2*Math.random());
+                     else if(item==2)
+                        request.body.transferStatus= Math.round(3*Math.random());
+                     else if(item==3)
+                        request.body.hourseStatus= Math.round(2*Math.random());
+                     else 
+                        request.body.loanStatus= Math.round(2*Math.random());
+                  });
+                  request.body.schedule = 10*Math.random().toFixed(1);
+                  request.body.status = Math.round(2*Math.random());
+                  request.body.orderNum = 9000+Math.round(Math.random()*1000000).toString();
+                  fs.readFile('js/orderData.js',function(err,data){
+                     fs.writeFile('js/orderData.js',data==''?JSON.stringify(request.body):data+','+JSON.stringify(request.body),'utf-8',function(err){
+                        if(err)
+                           throw err;
+                        console.log(err);
+                     });
+                  });
+                  response.writeHead(200, {'Content-Type': 'text/html'});
+                  response.write('true');
+               }
+               else
+               {
+                  response.writeHead(404, {'Content-Type': 'text/html'});
+                  response.write('false');
+               }
+               response.end();
+            }
          });
+         
+   }
+   function getdata(request,response){
    }
    if(request.url.indexOf('.')!=-1)
       file(request,response,request.url.substr(1));
    else if(request.url.indexOf('?')!=-1)
-      postdata(request,response,function(){
-         console.log(request.query)
-      });
-   else if(request.url.indexOf('index')!=-1)
+      getdata(request,response);
+   else if(request.url=='/')
       file(request,response,'index.html');
+   else if(request.url=='/order')
+      file(request,response,'orderCheck.html');
    else
-      postdata(request,response,function(){
-         if(request.body.sellerCertificateType)
-            var type =0;
-         else
-            var type =1;
-            for(var i in dataName[type]){
-               if(!request.body[i])
-               {
-                  response.writeHead(404, {'Content-Type': 'text/html'});
-                  response.write('false');
-                  response.end();
-               }
-            }
-         data.push(request.body);
-         response.writeHead(200, {'Content-Type': 'text/html'});
-         response.write('true');
-         response.end();
-      });
-   
+      postdata(request,response);
  
-}).listen(200);
+}).listen(80);

@@ -15,8 +15,9 @@
 	module.factory('moduleDeclaration',function(){
 		function initInput(scope){
 			scope.inputs={
-					place:'请选择',
-					type:'请选择',
+					houseAddress:'请选择',
+					ownershipType:'请选择',
+					formEntrust:'全权委托',
 					businessEntrust:[]
 				};
 		}
@@ -55,6 +56,7 @@
 							scope.inputs.businessEntrust.push(3);
 						else
 							scope.inputs.businessEntrust.push(4);
+			scope.inputs.businessEntrust = scope.inputs.businessEntrust.join(',');
 		}					
 		return{
 			judge: function(json,scope){
@@ -124,8 +126,8 @@
 						mySwiper.slideTo(3, 200, false);
 						window.scroll(0,0);
 					}
-					scope.placeChose = function(place){
-						scope.inputs.place = place;
+					scope.placeChose = function(houseAddress){
+						scope.inputs.houseAddress = houseAddress;
 						mySwiper.slideTo(scope.page, 200, false);
 						window.scroll(0,0);
 					}
@@ -134,12 +136,16 @@
 						mySwiper.slideTo(4, 200, false);
 						window.scroll(0,0);
 					}
-					scope.typeChose = function(type){
-						scope.inputs.type = type;
+					scope.typeChose = function(ownershipType){
+						scope.inputs.ownershipType = ownershipType;
 						mySwiper.slideTo(scope.page, 200, false);
 						window.scroll(0,0);
 					}
 					scope.submit = function(data){
+						if(scope.inputs.houseAddress=='请选择')
+							return;
+						if(scope.inputs.ownershipType=='请选择')
+							return;
 						ngAjax.post(scope);
 					}
 			}
