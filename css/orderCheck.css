@@ -1,7 +1,4 @@
 html *{
-	padding:0px;
-	margin:0px;
-	height:initial;
 }
 body{
 	background-color: #fbf9fe;
@@ -57,6 +54,9 @@ body{
 .undo a{
 	background-color: #CBD1D5;
 }
+.undo a:active{
+	background-color: #CBD1D5 !important;
+}
 .schedule_cell{
 	display:flex;
 	justify-content: space-between;
@@ -67,6 +67,9 @@ body{
 	padding-left: 1rem;
 	margin-left: 1rem;
 	flex: auto;
+}
+.schedule_cell:active{
+	background-color:#fff !important;
 }
 .schedule_cells{
 	display:flex;

@@ -51,6 +51,19 @@ http.createServer( function (request, response) {
       
    });  
    }
+   function png(request,response,src){
+      fs.readFile(src, "binary", function(error, file) {
+         if(error) {
+               response.writeHead(500, {"Content-Type": "text/plain"});
+               response.write(error + "\n");
+               response.end();
+         } else {
+               response.writeHead(200, {"Content-Type": "image/png"});
+               response.write(file, "binary");
+               response.end();
+         }
+      });
+   }
    function validate(request,type){
          for(var i in dataName[type]){
             if(!request.body[i])
@@ -84,7 +97,31 @@ http.createServer( function (request, response) {
                      else 
                         request.body.loanStatus= Math.round(2*Math.random());
                   });
-                  request.body.schedule = 10*Math.random().toFixed(1);
+                  request.body.bookStatus = Math.round(2*Math.random());
+                  request.body.transferStatus= Math.round(3*Math.random());
+                  request.body.cancelStatus = Math.round(2*Math.random());
+                  request.body.hourseStatus = Math.round(2*Math.random());
+                  request.body.loanStatus = Math.round(2*Math.random());
+
+                  if(request.body.bookStatus>=2)
+                     request.body.bookImage ='image/yuyuequhao.png';
+                  if(request.body.bookStatus==3)
+                     request.body.allPrivilegeImage = 'image/quanquanjiaojie.png';
+
+                  if(request.body.transferStatus>=2)
+                     request.body.transferContractImage = 'image/maimaihetong.png';
+                  if(request.body.transferStatus==3)
+                     request.body.transferImage = 'image/guohuwancheng.png';
+
+                  if(request.body.cancelStatus==2)
+                     request.body.cancelImage = 'image/diyawancheng.png';
+
+                  if(request.body.hourseStatus==2)
+                  request.body.hourseImage = 'image/quxinfangchanzheng.png';
+
+                  if(request.body.loanStatus==2)
+                     request.body.loanImage = 'image/daikuandiya.png';
+
                   request.body.status = Math.round(2*Math.random());
                   request.body.orderNum = 9000+Math.round(Math.random()*1000000).toString();
                   fs.readFile('js/orderData.js',function(err,data){
@@ -109,8 +146,14 @@ http.createServer( function (request, response) {
    }
    function getdata(request,response){
    }
-   if(request.url.indexOf('.')!=-1)
+   if(request.url.indexOf('js')!=-1)
       file(request,response,request.url.substr(1));
+   else if(request.url.indexOf('css')!=-1)
+      file(request,response,request.url.substr(1));
+   else if(request.url.indexOf('map')!=-1)
+      file(request,response,request.url.substr(1));
+   else if(request.url.indexOf('png')!=-1)
+      png(request,response,request.url.substr(1));
    else if(request.url.indexOf('?')!=-1)
       getdata(request,response);
    else if(request.url=='/')

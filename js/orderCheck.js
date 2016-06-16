@@ -18,6 +18,7 @@
 			init:function(scope){
 				scope.details=data;
 				scope.scheduleClass=[];
+				scope.mask = 'none';
 			}
 		}
 	})
@@ -30,6 +31,19 @@
 				};
 				scope.scheduleCheck = function(data){
 					detailCheck.scheduleCheck(scope,data.detail);
+				};
+				scope.showmask = function(num,data){
+					console.log(data);
+					if(num ==1)
+					{
+						scope.title = '预约取号凭证';
+						scope.image = this.bookImage;
+						scope.bind = '预约取号';
+					}
+					scope.mask='block';
+				};
+				scope.closemask = function(data){
+					scope.mask= 'none';
 				}
 			}
 		}
@@ -38,6 +52,7 @@
 	module.factory('detailCheck',function(){
 		return{
 			check: function(scope,data){
+				console.log(data);
 				scope.detail = data;
 				scope.detail.businessEntrust.split(',').forEach(function(item,index){
 						if(index==0)
@@ -56,62 +71,59 @@
 				window.scrollTo(0,0);
 			},
 			scheduleCheck:function(scope,data){
-				console.log(data);
 				var i;
+				var tem = data.bookStatus;
+				scope.detail = data;
+				for(i=0;i<=2;i++){
+					console.log(data);
+					if(tem--<1)
+						scope.scheduleClass[i] ='undo';
+					else if(i==1){
+						scope.scheduleClass[i] ='';
+					}
+						
+				}
 				if(data.businessEntrust.indexOf('注销抵押')>-1){
 					scope.cancel = 'block';
-					if(data.cancelStatus){
-						for(i=3;i<4;i++,data.cancelStatus--)
-						{
-							if(data.cancelStatus<1)
+						tem = data.cancelStatus;
+						for(i=3;i<=4;i++)
+							if(tem--<1)
 								scope.scheduleClass[i] ='undo';
 							else
 								scope.scheduleClass[i] ='';
-						}
-							
-					}
 				}
 				else
 					scope.cancel = 'none';
 				if(data.businessEntrust.indexOf('房产过户')>-1){
 					scope.transfer = 'block';
-					if(data.transferStatus){
-						for(i=5;i<7;i++,data.transferStatus--)
-						{
-							if(data.transferStatus<1)
+						tem = data.transferStatus;
+						for(i=5;i<=7;i++)
+							if(tem--<=0)
 								scope.scheduleClass[i] ='undo';
 							else
 								scope.scheduleClass[i] ='';
-						}
-					}
 				}
 				else
 					scope.transfer = 'none';
 				if(data.businessEntrust.indexOf('取新房产证')>-1){
 					scope.hourse = 'block';
-					if(data.hourseStatus){
-						for(i=8;i<9;i++,data.hourseStatus--)
-						{
-							if(data.hourseStatus<1)
+						tem = data.hourseStatus;
+						for(i=8;i<=9;i++)
+							if(tem--<1)
 								scope.scheduleClass[i] ='undo';
 							else
 								scope.scheduleClass[i] ='';
-						}
-					}
 				}
 				else
 					scope.hourse = 'none';
 				if(data.businessEntrust.indexOf('贷款抵押')>-1){
 					scope.loan = 'block';
-					if(data.loanStatus){
-						for(i=10;i<11;i++,data.loanStatus--)
-						{
-							if(data.loanStatus<1)
+						tem = data.loanStatus;
+						for(i=10;i<=11;i++)
+							if(tem--<1)
 								scope.scheduleClass[i] ='undo';
 							else
 								scope.scheduleClass[i] ='';
-						}
-					}
 				}
 				else
 					scope.loan = 'none';
@@ -127,7 +139,10 @@
 				restrict:'AE',
 				scope:{
 					ifshow:'=',
-					num:'='
+					num:'=',
+					clicks:'&',
+					pngimage:'@',
+					masktitle:'@'
 				},
 				template:   '<i class="weui_icon_circle"></i>'
 							+'<div class="weui_cell schedule_cell">'
@@ -136,14 +151,33 @@
 										+"<p>{{scheduletext}}</p>"
 									+'</section>'
 								+'</div>'
-								+'<div class="button_sp_area" ng-show="ifshow">'
-							    	+'<a href="javascript:;" class="weui_btn weui_btn_mini weui_btn_primary btn_status">查看凭证</a>'
+								+'<div class="button_sp_area" ng-show="ifshow" ng-click="open()">'
+							    	+'<a  class="weui_btn weui_btn_mini weui_btn_primary btn_status">查看凭证</a>'
+								+'</div>'
+							+'</div>'
+							+'<div class="weui_dialog_alert" style="display:none;display:{{mask}};">'
+								+'<div class="weui_mask" style="z-index:3;top:0;left:200%"></div>'
+								+'<div class="weui_dialog" style="left:250%;top:20%">'
+									+'<div class="weui_dialog_hd">'
+										+"<strong class='weui_dialog_title' ng-bind='masktitle'></strong>"
+									+'</div>'
+									+'<div class="weui_dialog_bd">'
+										+"<img src='{{pngimage}}' style='width:100%;text-align:center' alt='暂无数据'></img>"
+									+'</div>'
+									+'<div class="weui_dialog_ft">'
+										+"<a ng-click='close()' class='weui_btn_dialog primary'>确定</a>"
+									+'</div>'
 								+'</div>'
 							+'</div>',
 				link:function(scope,elem,attr){
 					scope.scheduletexts=['','预约取号','办理全权交接手续','《注销抵押》办理中','注销抵押完成','《过户》办理中','打印二手买卖合同','过户完成','《取新房产证》办理中','取新房产证办理完成','《代理抵押》办理中','贷款抵押完成'];
 					scope.scheduletext = scope.scheduletexts[scope.num];
-						
+					scope.close = function(){
+						scope.mask='none';
+					}
+					scope.open = function(){
+						scope.mask='block';
+					}
 				}
 		}
 	});
@@ -205,6 +239,17 @@
 				}
 				
 			}
+		}
+	});
+	module.directive('ngimage',function(){
+		return{
+			restrict:'E',
+			replace:true,
+			scope:{
+				pngsrc:'@',
+				bind:'='
+			},
+			template:'<img src={{pngsrc}} style="display:none;width:100%" alt="图片出错了" ng-bind="bind"></img>'
 		}
 	});
 }()

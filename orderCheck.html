@@ -8,7 +8,7 @@
 		<link rel="stylesheet" href="css/orderCheck.css">
 	</head>
 	<body ontouchstart='' ng-controller='myctrl'>
-		<div class="swiper-container">
+		<div class="swiper-container" style='height:initial'>
 			<div class="swiper-wrapper" style='height:initial'>
 		      	<div class="weui_cells weui_cells_access swiper-slide">
 			            <a class="weui_cell order_Cell" id = '{{detail.orderNum}}' ng-click='orderDetail(this)'  ng-repeat='detail in details'>
@@ -124,26 +124,26 @@
 							</div>
 						</div>
 						<div>
-							<artical class="weui_cells schedule_cells {{scheduleClass[1]}}" ifshow='true' num="1"></artical>	
-							<artical class="weui_cells schedule_cells {{scheduleClass[2]}}" ifshow='true' num="2"></artical>
+							<artical class="weui_cells schedule_cells {{scheduleClass[1]}}" ifshow='true' num="1" pngimage="{{detail.bookImage}}" masktitle='预约取号凭证'></artical>	
+							<artical class="weui_cells schedule_cells {{scheduleClass[2]}}" ifshow='true' num="2" pngimage="{{detail.allPrivilegeImage}}" masktitle='全权交接凭证'></artical>
 							
 						</div>
 						<div style='display:{{cancel}}'>	
-							<artical class="weui_cells schedule_cells {{scheduleClass[3]}}" ifshow='false' num="3"></artical>	
-							<artical class="weui_cells schedule_cells {{scheduleClass[4]}}" ifshow='true' num="4"></artical>
+							<artical class="weui_cells schedule_cells {{scheduleClass[3]}}" ifshow='false' num="3" ></artical>	
+							<artical class="weui_cells schedule_cells {{scheduleClass[4]}}" ifshow='true' num="4" pngimage="{{detail.cancelImage}}" masktitle='注销抵押凭证'></artical>
 						</div>
 						<div style='display:{{transfer}}'>
 							<artical class="weui_cells schedule_cells {{scheduleClass[5]}}" ifshow='false' num="5"></artical>
-							<artical class="weui_cells schedule_cells {{scheduleClass[6]}}" ifshow='true' num="6"></artical>	
-							<artical class="weui_cells schedule_cells {{scheduleClass[7]}}" ifshow='true' num="7"></artical>
+							<artical class="weui_cells schedule_cells {{scheduleClass[6]}}" ifshow='true' num="6" pngimage="{{detail.transferContractImage}}" masktitle='二手买卖合同凭证'></artical>	
+							<artical class="weui_cells schedule_cells {{scheduleClass[7]}}" ifshow='true' num="7" pngimage="{{detail.transferImage}}" masktitle='过户完成凭证'></artical>
 						</div>	
 						<div style='display:{{hourse}}'>						
 							<artical class="weui_cells schedule_cells {{scheduleClass[8]}}" ifshow='false' num="8"></artical>	
-							<artical class="weui_cells schedule_cells {{scheduleClass[9]}}" ifshow='true' num="9"></artical>
+							<artical class="weui_cells schedule_cells {{scheduleClass[9]}}" ifshow='true' num="9" pngimage="{{detail.hourseImage}}" masktitle='取新房产证凭证'></artical>
 						</div>
 						<div style='display:{{loan}}'>
 							<artical class="weui_cells schedule_cells {{scheduleClass[10]}}" ifshow='false' num="10"></artical>
-							<artical class="weui_cells schedule_cells {{scheduleClass[11]}}" ifshow='true' num="11"></artical>
+							<artical class="weui_cells schedule_cells {{scheduleClass[11]}}" ifshow='true' num="11" pngimage="{{detail.loanImage}}" masktitle='带框抵押凭证'></artical>
 						</div>
 				    	<div class="bd spacing">
 		    					<a href="javascript:mySwiper.slidePrev();window.scrollTo(0,0);" class="weui_btn weui_btn_primary next">返回</a>
