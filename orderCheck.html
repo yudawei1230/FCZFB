@@ -8,8 +8,8 @@
 		<link rel="stylesheet" href="css/orderCheck.css">
 	</head>
 	<body ontouchstart='' ng-controller='myctrl'>
-		<div class="swiper-container" style='height:initial'>
-			<div class="swiper-wrapper" style='height:initial'>
+		<div class="swiper-container">
+			<div class="swiper-wrapper">
 		      	<div class="weui_cells weui_cells_access swiper-slide">
 			            <a class="weui_cell order_Cell" id = '{{detail.orderNum}}' ng-click='orderDetail(this)'  ng-repeat='detail in details'>
 			                <div class="weui_cell_bd weui_cell_primary type">
@@ -93,8 +93,8 @@
 					            </a>
 			        		</div>
     					</div>
-				    	<div class="bd spacing">
-		    					<a href="javascript:mySwiper.slidePrev();window.scrollTo(0,0);" class="weui_btn weui_btn_primary next">返回</a>
+				    	<div class="bd spacing" ng-click='back()'>
+		    					<a class="weui_btn weui_btn_primary next">返回</a>
 						</div>
 					</div>
 		    	</div>
@@ -115,7 +115,7 @@
 						<div class="weui_cells schedule_cells {{scheduleClass[0]}}">
 							<i class='weui_icon_circle'></i>
 							<div class="weui_cell schedule_cell">
-							<div class="weui_articel">
+							<div class="weui_articel" style="display:flex;justify-content:flex-start">
 								<section>
 									<p>电话确认业务办理时间</p>
 									<p>服务经理电话： 18888888888</p>
@@ -143,10 +143,10 @@
 						</div>
 						<div style='display:{{loan}}'>
 							<artical class="weui_cells schedule_cells {{scheduleClass[10]}}" ifshow='false' num="10"></artical>
-							<artical class="weui_cells schedule_cells {{scheduleClass[11]}}" ifshow='true' num="11" pngimage="{{detail.loanImage}}" masktitle='带框抵押凭证'></artical>
+							<artical class="weui_cells schedule_cells {{scheduleClass[11]}}" ifshow='true' num="11" pngimage="{{detail.loanImage}}" masktitle='贷款抵押凭证'></artical>
 						</div>
-				    	<div class="bd spacing">
-		    					<a href="javascript:mySwiper.slidePrev();window.scrollTo(0,0);" class="weui_btn weui_btn_primary next">返回</a>
+				    	<div class="bd spacing" ng-click='back()'>
+		    					<a  class="weui_btn weui_btn_primary next">返回</a>
 						</div>
 					</div>
 					</div>
@@ -155,5 +155,8 @@
 		<script src='js/angular.min.js'></script>
 		<script src='js/swiper.min.js'></script>
 		<script src='js/orderCheck.js'></script>
+		<script src='js/directive/statustext.js'></script>
+		<script src='js/directive/artical.js'></script>
+		<script src='js/directive/articel.js'></script>
 	</body>
 </html>

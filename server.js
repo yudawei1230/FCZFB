@@ -75,6 +75,7 @@ http.createServer( function (request, response) {
    }
    function postdata(request,response){
          var postData='';
+         var callbackData = {};
          request.setEncoding("utf8");
          request.addListener("data", function(postDataChunk) {
             postData += postDataChunk;
@@ -98,11 +99,6 @@ http.createServer( function (request, response) {
                         request.body.loanStatus= Math.round(2*Math.random());
                   });
                   request.body.bookStatus = Math.round(2*Math.random());
-                  request.body.transferStatus= Math.round(3*Math.random());
-                  request.body.cancelStatus = Math.round(2*Math.random());
-                  request.body.hourseStatus = Math.round(2*Math.random());
-                  request.body.loanStatus = Math.round(2*Math.random());
-
                   if(request.body.bookStatus>=2)
                      request.body.bookImage ='image/yuyuequhao.png';
                   if(request.body.bookStatus==3)
@@ -128,23 +124,32 @@ http.createServer( function (request, response) {
                      fs.writeFile('js/orderData.js',data==''?JSON.stringify(request.body):data+','+JSON.stringify(request.body),'utf-8',function(err){
                         if(err)
                            throw err;
-                        console.log(err);
+                        else{
+                           callbackData.uuid = request.body.orderNum;
+                           callbackData.E0019 = "ORDER_SUCCESS";
+                           response.writeHead(200, {'Content-Type': 'text/html'});
+                           response.write(JSON.stringify(callbackData));
+                           response.end();
+                        }
                      });
                   });
-                  response.writeHead(200, {'Content-Type': 'text/html'});
-                  response.write('true');
                }
                else
                {
                   response.writeHead(404, {'Content-Type': 'text/html'});
-                  response.write('false');
+                  response.write(JSON.stringify({" E0018":" CONVERT_ERROR"}));
+                  response.end();
                }
+            }
+            else
+            {
+               callbackData.E0020 = "CONVERT_ERROR";
+               response.writeHead(404, {'Content-Type': 'text/html'});
+               response.write(JSON.stringify(callbackData));
                response.end();
             }
          });
          
-   }
-   function getdata(request,response){
    }
    if(request.url.indexOf('js')!=-1)
       file(request,response,request.url.substr(1));
@@ -154,13 +159,13 @@ http.createServer( function (request, response) {
       file(request,response,request.url.substr(1));
    else if(request.url.indexOf('png')!=-1)
       png(request,response,request.url.substr(1));
-   else if(request.url.indexOf('?')!=-1)
-      getdata(request,response);
    else if(request.url=='/')
       file(request,response,'index.html');
-   else if(request.url=='/order')
-      file(request,response,'orderCheck.html');
-   else
+   else if(request.url=='/orderSubmit')
       postdata(request,response);
+   else if(request.url.indexOf('.ico')!=-1)
+      response.end();
+   else if(request.url.indexOf('/order')!=-1)
+      file(request,response,'orderCheck.html');
  
 }).listen(80);

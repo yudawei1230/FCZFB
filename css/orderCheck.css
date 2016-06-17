@@ -73,7 +73,6 @@ body{
 }
 .schedule_cells{
 	display:flex;
-	justify-content: left;
 	align-items: center;
 	padding-left: 1rem;
 }

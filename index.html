@@ -61,19 +61,17 @@
 				<!-- 非过户资料输入页 -->
 				<div class="swiper-slide">
 					<div class="weui_cells weui_cells_form">
-					<div class="weui_cells weui_cells_form">
+					<form class="weui_cells weui_cells_form" name='form'>
 			            <cell title='预约人姓名' model='inputs.personName'></cell>
-			            <cell title='手机' model='inputs.phoneNumber'></cell>
+			            <cell title='手机' model='inputs.phoneNumber' type="number"></cell>
 			            <cell title='身份证号码' model='inputs.certificateNo'></cell>
 						<cells title='房地产所在地' bind='inputs.houseAddress' click='choosePlace(1)'></cells>
 						<cell title='房地产名称' model='inputs.houseName'></cell>
 						<cells title='权属证明类型' bind='inputs.ownershipType' click='chooseType(1)'></cells>
 						<cell title='权属证明编号' model='inputs.ownershipNo'></cell>
+			        </form>
 			        </div>
-			        </div>
-			    	<div class="bd spacing" ng-click='submit(this.inputs)'>
-			    		<a class="weui_btn weui_btn_primary next" style='margin-top:20%'>提交</a>
-					</div>
+					<formtext ng-click='submit()' data='{{inputs}}'></formtext>
 			    	<div class="bd spacing" ng-click='backToChoose()'>
 			    		<a class="weui_btn weui_btn_primary next" style='margin-top:5%'>返回</a>
 					</div>
@@ -125,12 +123,60 @@
 				            </a>
 			        	</div>
 				</div>
+				<!-- 订单提交成功 -->
+				<div class="swiper-slide">
+					<div class="container">
+						<div class="page">
+						    <div class="weui_msg">
+						        <div class="weui_icon_area"><i class="weui_icon_success weui_icon_msg"></i></div>
+						        <div class="weui_text_area">
+						            <h2 class="weui_msg_title">订单提交成功</h2>
+						            <p class="weui_msg_desc">订单号：{{success.orderNum}}</p>
+						            <p class="weui_msg_desc">我们将在24小时内与您联系</p>
+						            <p class="weui_msg_desc">请注意接听</p>
+						            <p class="weui_msg_desc">您可以在订单详情页面查看办理进度</p>
+						            <br>
+						            <p class="weui_msg_desc">客服热线：400-888-8888</p>
+						        </div>
+						        <div class="weui_opr_area">
+						            <p class="weui_btn_area">
+						                <a href="javascript:window.location.reload();" class="weui_btn weui_btn_primary">完成</a>
+						                <a ng-click='orderhref()' class="weui_btn weui_btn_default">订单详情</a>
+						            </p>
+						        </div>
+						    </div>
+						</div>
+					</div>
+				</div>
+				<!-- 订单提交失败 -->
+				<div class="swiper-slide">
+					<div class="container">
+						<div class="page">
+						    <div class="weui_msg">
+						        <div class="weui_icon_area"><i class="weui_icon_cancel weui_icon_msg"></i></div>
+						        <div class="weui_text_area">
+						            <h2 class="weui_msg_title">订单提交失败</h2>
+						            <p class="weui_msg_desc" ng-bind='errors'></p>
+						            <br>
+						            <p class="weui_msg_desc">客服热线：400-888-8888</p>
+						        </div>
+						        <div class="weui_opr_area">
+						            <p class="weui_btn_area">
+						                <a href="javascript:window.location.reload();" class="weui_btn weui_btn_primary">重新提交</a>
+						            </p>
+						        </div>
+						    </div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 
 	<script src='js/angular.min.js'></script>
 	<script src='js/swiper.min.js'></script>
 	<script src='js/index.js'></script>
-	<script type="text/javascript" src='js/directive.js'></script>
+	<script src='js/directive/cell.js'></script>
+	<script src='js/directive/cells.js'></script>
+	<script src='js/directive/formtext.js'></script>
 	</body>	
 </html>

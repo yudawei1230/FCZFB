@@ -1,11 +1,11 @@
-
-	//声明模块
-	var module = angular.module('myapp',[]);
-	//滑动组件
-	var mySwiper = new Swiper('.swiper-container', {
-	        direction: 'horizontal',
-	        onlyExternal : true
-	});
+//声明模块
+var module = angular.module('myapp',[]);
+//滑动组件
+var mySwiper = new Swiper('.swiper-container', {
+        direction: 'horizontal',
+        onlyExternal : true
+});
+!function(){
 	//控制器
 	module.controller('myctrl',['$scope','moduleFunction','moduleDeclaration',function($scope,moduleFunction,moduleDeclaration){
 		moduleDeclaration.init($scope);
@@ -23,11 +23,12 @@
 		}
 		function initPage(scope){
 			scope.page = 0;
+			scope.success={};
 		}
 		return{
 			init:function(scope){
 					initInput(scope);
-					initInput(scope);
+					initPage(scope);
 				},
 			initInput:function(scope){
 				initInput(scope);
@@ -98,12 +99,18 @@
 				}
 		return{
 			post:function(scope){
-				console.log(scope.inputs);
 				$http.post('/orderSubmit',scope.inputs).success(function(data,header,config,status){
-					console.log(data);
-
+					if(data)
+						if(data.uuid&&data.E0019){
+							scope.success.orderNum = data.uuid;
+							mySwiper.slideTo(5, 200, false);
+						}
 				}).error(function(data,header,config,status){
-					console.log(data);
+					if(data.E0018)
+						scope.errors = '系统转换错误';
+					else
+						scope.errors = '订单提交失败';
+					mySwiper.slideTo(6, 200, false);
 				});
 			}
 		}
@@ -113,8 +120,7 @@
 		return{
 			init:function(scope){
 					scope.infoInput= function(data){
-						console.log(data);
-					infoInput.judge(data,this);	
+						infoInput.judge(data,this);	
 					}
 					scope.backToChoose = function(){
 						moduleDeclaration.initInput(scope);
@@ -141,14 +147,19 @@
 						mySwiper.slideTo(scope.page, 200, false);
 						window.scroll(0,0);
 					}
-					scope.submit = function(data){
+					scope.submit = function(){
 						if(scope.inputs.houseAddress=='请选择')
 							return;
 						if(scope.inputs.ownershipType=='请选择')
 							return;
 						ngAjax.post(scope);
 					}
+					scope.orderhref = function(){
+						window.location.href= '/order?orderNum='+scope.success.orderNum;
+					}
 			}
 		}
 	}]);
+}()
+
 
