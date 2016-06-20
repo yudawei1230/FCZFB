@@ -147,11 +147,7 @@ var mySwiper = new Swiper('.swiper-container', {
 						mySwiper.slideTo(scope.page, 200, false);
 						window.scroll(0,0);
 					}
-					scope.submit = function(){
-						if(scope.inputs.houseAddress=='请选择')
-							return;
-						if(scope.inputs.ownershipType=='请选择')
-							return;
+					scope.submit = function(u){
 						ngAjax.post(scope);
 					}
 					scope.orderhref = function(){

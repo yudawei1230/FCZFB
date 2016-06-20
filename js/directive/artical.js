@@ -23,7 +23,7 @@ module.directive('artical',function(){
 						+'</div>'
 						+'<div class="weui_dialog_alert" style="display:none;display:{{mask}};">'
 							+'<div class="weui_mask"></div>'
-							+'<div class="weui_dialog" style="top:45%;border-radius:10px">'
+							+'<div class="weui_dialog" style="top:200px;border-radius:10px">'
 								+'<div class="weui_dialog_hd">'
 									+"<strong class='weui_dialog_title' ng-bind='masktitle'></strong>"
 								+'</div>'

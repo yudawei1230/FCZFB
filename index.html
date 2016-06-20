@@ -63,7 +63,7 @@
 					<div class="weui_cells weui_cells_form">
 					<form class="weui_cells weui_cells_form" name='form'>
 			            <cell title='预约人姓名' model='inputs.personName'></cell>
-			            <cell title='手机' model='inputs.phoneNumber' type="number"></cell>
+			            <cell title='手机号码' model='inputs.phoneNumber' type="number"></cell>
 			            <cell title='身份证号码' model='inputs.certificateNo'></cell>
 						<cells title='房地产所在地' bind='inputs.houseAddress' click='choosePlace(1)'></cells>
 						<cell title='房地产名称' model='inputs.houseName'></cell>
@@ -71,10 +71,7 @@
 						<cell title='权属证明编号' model='inputs.ownershipNo'></cell>
 			        </form>
 			        </div>
-					<formtext ng-click='submit()' data='{{inputs}}'></formtext>
-			    	<div class="bd spacing" ng-click='backToChoose()'>
-			    		<a class="weui_btn weui_btn_primary next" style='margin-top:5%'>返回</a>
-					</div>
+					<formtext clicks='submit()' data='{{inputs}}' backclick='backToChoose()' type='FGH'></formtext>
 				</div>
 				<!-- 过户资料输入页 -->
 				<div class="swiper-slide">
@@ -94,12 +91,7 @@
 						<cells title='权属证明类型' bind='inputs.ownershipType' click='chooseType(2)'></cells>
 						<cell title='权属证明编号' model='inputs.ownershipNo'></cell>
 			        </div>
-			    	<div class="bd spacing" ng-click='submit(this.inputs)'>
-			    		<a class="weui_btn weui_btn_primary next" style='margin-top:10%'>提交</a>
-					</div>
-			    	<div class="bd spacing" ng-click='backToChoose()'>
-			    		<a class="weui_btn weui_btn_primary next" style='margin-top:5%'>返回</a>
-					</div>
+					<formtext clicks='submit()' data='{{inputs}}' backclick='backToChoose()' type='GH'></formtext>
 				</div>
 				<!-- 房产所在地区选择 -->
 				<div class="swiper-slide">
