@@ -379,7 +379,7 @@ module.exports = function(myapp){
 			}
 		}
 	});
-	myapp.directive('uservalidation',function(){
+/*	myapp.directive('uservalidation',function(){
 		return{
 			link: function(scope,element,attr){
 				scope.$watch('registerUser.username',function(news,old){
@@ -405,8 +405,8 @@ module.exports = function(myapp){
 				});
 			}
 		}
-	});
-	myapp.directive('emailvalidate',function(){
+	});*/
+/*	myapp.directive('emailvalidate',function(){
 		return{
 			link:function(scope,element,attr){
 				scope.$watch('registerUser.email',function(news,old){
@@ -459,7 +459,7 @@ module.exports = function(myapp){
 				});	
 			}
 		}
-	});
+	});*/
 	myapp.directive('passwordvalidate',function(){
 		return{
 			link:function(scope,element,attr){
@@ -501,7 +501,7 @@ module.exports = function(myapp){
 					if(!scope.registerUser.userName)
 						alert('请输入用户名')
 					else if(!scope.registerUser.question)
-						alert('请输入手机')
+						alert('请输入密保')
 					else if(!scope.registerUser.password)
 						alert('请输入密码')
 					else if(!scope.registerUser.passwordConfirmation)
@@ -521,15 +521,6 @@ module.exports = function(myapp){
 
 },{}],3:[function(require,module,exports){
 module.exports = function(myapp){
-	myapp.factory('pp',['$http',function($http){
-		var p = 0;
-		this.op=function(){
-			return ++p;
-		}
-		return {
-			op:this.op
-		}
-	}]);
 	myapp.factory('logins',['$http',function($http,data){
 		this.login = function(data){
 			 return $http.post('../../bin/www',data);

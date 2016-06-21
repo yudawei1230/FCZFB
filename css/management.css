@@ -1,0 +1,64 @@
+html *{
+	margin: 0;
+	padding: 0;
+}
+.body_header{
+	position: relative;
+	height: 15%;
+	background-color: #333;
+	color: #ccc;
+}
+.body_header h1{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	margin: 0px;
+}
+section{
+	border-bottom: 1px solid #ddd;
+}
+form{
+	font-size: 20px;
+	width: 90%;
+	margin: 0 auto;
+}
+.col{
+	display: flex;
+}
+.cols{
+	display:flex;
+	margin: 2rem 1rem;
+	height: 3rem;
+	flex: 1;
+	align-content: center;
+}
+.cols *{
+	display:flex;
+	flex:2;
+	justify-content: space-around
+}
+.cols p{
+	margin: 0;
+	display:flex;
+	flex:1;
+	width:10rem;
+	padding-right:1rem;
+}
+.cols button{
+	margin:0;
+}
+
+table{
+	width: 90%;
+	margin: 4rem auto;
+}
+table th,td{
+	border: 1px solid #ddd;
+	text-align: center;
+}
+table input{
+	margin: 0 auto;
+	width: 100px;
+}
+

@@ -1,14 +1,17 @@
 var http = require('http');
 var url = require('url');
 var querystring = require('querystring');
+var postdata = {
+    "username":"张三"
+};
 http.createServer( function (request, response) {  
  var WetchatHead = {
-                    hostname:'172.30.60.90',
-                    path:'/api/register',
-                    port:7071,
+                    hostname:'172.30.60.245',
+                    path:'/xwdc-web/searchByUserName',
+                    port:8080,
                     method:'POST',
                     headers:{
-                      'Content-type':"application/x-www-form-urlencoded"
+                      'Content-type':"application/json;charset=UTF-8"
                     }
                };
       var req = http.request(WetchatHead,function(res){
@@ -26,7 +29,6 @@ http.createServer( function (request, response) {
                   })
             }
       });
-
+      req.write(querystring.stringify(postdata));
       req.end();
-      response.end();
 }).listen(80);

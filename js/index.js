@@ -18,7 +18,10 @@ var mySwiper = new Swiper('.swiper-container', {
 					houseAddress:'请选择',
 					ownershipType:'请选择',
 					formEntrust:'全权委托',
-					businessEntrust:[]
+					businessEntrust:[],
+					username:'13580503220',
+					certificateType:'1',
+					sellerCertificateType:'1'
 				};
 		}
 		function initPage(scope){
@@ -99,13 +102,16 @@ var mySwiper = new Swiper('.swiper-container', {
 				}
 		return{
 			post:function(scope){
-				$http.post('/orderSubmit',scope.inputs).success(function(data,header,config,status){
+				$http.post('/api/xwdc/orderSubmit',scope.inputs).success(function(data,header,config,status){
+					console.log(data);
+					console.log(scope.inputs);	
 					if(data)
 						if(data.uuid&&data.E0019){
 							scope.success.orderNum = data.uuid;
 							mySwiper.slideTo(5, 200, false);
 						}
 				}).error(function(data,header,config,status){
+					console.log(data);
 					if(data.E0018)
 						scope.errors = '系统转换错误';
 					else

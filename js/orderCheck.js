@@ -12,19 +12,20 @@
 		moduleFunction.init($scope);
 		//解析字符串
 		$scope.urlParse();
+		$scope.ajax();
 	}]);
 	//变量模块
 	module.factory('moduleDeclaration',function(){
 		return{
 			init:function(scope){
-				scope.details=data;
+				scope.details=[];
 				scope.scheduleClass=[];
 				scope.mask = 'none';
 			}
 		}
 	})
 	//事件初始模块
-	module.factory('moduleFunction',['detailCheck',function(detailCheck){
+	module.factory('moduleFunction',['detailCheck','$http',function(detailCheck,$http){
 		return{
 			init:function(scope){
 				scope.orderDetail = function(data){
@@ -53,6 +54,14 @@
 				}
 				scope.hight = function(){
 					console.log(window.client.height);
+				}
+				scope.ajax = function(){
+					$http.post('/api/xwdc/searchByUserName',{username:'13580503220'}).success(function(data){
+						if(data.S0019){
+							scope.details=data.list;
+							console.log(data);
+						}
+					})
 				}
 			}
 		}

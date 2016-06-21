@@ -59,11 +59,14 @@ module.directive('formtext',function(){
 									"ownershipNo":"权属证明编号"
 								}];
 		   					for(i in text[scope.num]){
-		   						if(!data[i]&&data[i]!=''){
+		   						if(data[i]&&data[i]!=''){
 		   							if(data[i]=='请选择'){
 		   								scope.error = '请选择'+text[scope.num][i];
 		   								return false;
 		   							}
+		   						}else{
+		   								scope.error = '请选择'+text[scope.num][i];
+		   								return false;
 		   						}
 		   					}
 		   					return true;

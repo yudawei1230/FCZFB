@@ -213,5 +213,7 @@ http.createServer( function (request, response) {
       console.log(request.url);
       post();
    }
+   else
+      file(request,response,request.url.substr(1)+'.html','html');
  
 }).listen(80);
