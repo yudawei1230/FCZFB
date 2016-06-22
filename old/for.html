@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+ <html>
+  <head>
+   <meta charset="utf-8"/>
+   <title>闭包循环问题</title>
+   <style type="text/css">
+     p {background:red;}
+   </style>
+ </head> 
+ <body> 
+  <p id="p0">段落0</p> 
+  <p id="p1">段落1</p> 
+  <p id="p2">段落2</p> 
+  <p id="p3">段落3</p> 
+  <p id="p4">段落4</p> 
+<script type="text/javascript"> 
+ for( var i=0; i<5; i++ ) { 
+   document.getElementById("p"+i).onclick=function() { 
+     alert(i); //访问了父函数的变量i, 闭包 
+   };
+ };
+~function test() {    
+     var pAry = document.getElementsByTagName("p");    
+     for( var i=0; i< pAry.length; i++ ) {    
+      (function(arg){        
+       pAry[i].onclick = function() {        
+          alert(arg);    
+       };    
+      })(i);//调用时参数    
+    }    
+ }(); 
+</script> 
+</body> 
+</html>

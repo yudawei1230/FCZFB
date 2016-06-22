@@ -12,10 +12,10 @@ html body {
     height: 100%;
     background-color: rgba(250, 240, 230, 0.2);
     opacity: 0;
-    animation: shadow 1s;
-    -moz-animation: shadow 1s;
-    -webkit-animation: shadow 1s;
-    -o-animation: shadow 1s; }
+    animation: shadow 2s;
+    -moz-animation: shadow 2s;
+    -webkit-animation: shadow 2s;
+    -o-animation: shadow 2s; }
   /* line 17, ../sass/login.sass */
   html body img {
     position: fixed;

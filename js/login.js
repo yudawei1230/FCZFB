@@ -321,7 +321,7 @@ module.exports = function(myapp){
 				if(localStorage.getItem('username')&&localStorage.getItem('password'))
 				{
 					scope.user={
-						username:localStorage.getItem('username'),
+						username:localStorage.getItem('userName'),
 						password:localStorage.getItem('password')
 					}
 					scope.check = true;
@@ -336,7 +336,7 @@ module.exports = function(myapp){
 					}
 				});
 				element.bind('click',function(){
-					if(!scope.user.username)
+					if(!scope.user.userName)
 						alert('请输入邮箱或手机');
 					else if(!scope.user.password)
 						alert('请输入密码');
@@ -344,7 +344,7 @@ module.exports = function(myapp){
 					{
 						if(scope.check)
 						{
-							localStorage.setItem("username", scope.user.username); 
+							localStorage.setItem("username", scope.user.userName); 
 							localStorage.setItem("password", scope.user.password); 
 						}
 						scope.login(scope.user);
@@ -523,7 +523,7 @@ module.exports = function(myapp){
 module.exports = function(myapp){
 	myapp.factory('logins',['$http',function($http,data){
 		this.login = function(data){
-			 return $http.post('../../bin/www',data);
+			 return $http.post('/api/xwdc_login',data);
 		}
 		return{
 			login:this.login
@@ -538,7 +538,7 @@ module.exports = function(myapp){
 					what = 'register';
 				}
 				console.log(data);
-				return $http.post('/register',data);
+				return $http.post('/api/xwdc_register',data);
 			}
 		}
 	}]);
@@ -552,12 +552,10 @@ require('./angular_factory.js')(myapp);
 myapp.controller('login',['$scope','$timeout','logins','registers',function($scope,$timeout,logins,registers){
 	$scope.login = function(user){
 		logins.login(user).then(function(res){
-			if(res.data==="")
-				alert('此帐号不存在');
-			else if(res.data)
-				 window.location.replace(res.data);
-			else
+			if(res.data.E0003)
 				alert('请输入正确的密码');
+			else if(res.data.S0009)
+				 window.location.href='/management.html';
 		});
 	};
 	$scope.register = function(user){
