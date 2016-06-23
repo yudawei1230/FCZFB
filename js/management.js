@@ -7,13 +7,14 @@
 	module.factory('init',['ajax',function(ajax){
 		function initFn(scope){
 			scope.getData = ajax.getData;
-			scope.uploadbook = ajax.uploadBook;
-			//scope.uploadbook();
-
+			scope.upload = function(that){
+				ajax.upload(that);
+			};
 		}
 		function initVa(scope){
 			scope.orders = [];
-			scope.input = {};
+			scope.input = {type:0};
+			scope.types = [{id:0,name:'预约'},{id:1,name:'注销抵押'},{id:2,name:'过户'},{id:3,name:'取新房产证'},{id:4,name:'贷款抵押'}];
 		}
 		return{
 			initAll:function(scope){
@@ -84,12 +85,14 @@
 					}
 				})
 			},
-			uploadBook:function(that){
-				       var fd = new FormData();
+			upload:function(that){
+				console.log(that);
+				//console.log(scope);
+/*				       var fd = new FormData();
 				        //var file = document.querySelector('input[type=file]').files[0];
 				        fd.append('nextName', 'bookStatus');  
-				        fd.append('nextStatus', 0);
-				        fd.append('orderid', '677a5c69c4b0');
+				        fd.append('nextStatus',0);
+				        fd.append('orderid', '74ed7af2a0ec');
 			        	$http({
 				            method:'POST',
 				            url:"/api/xwdc/upload",
@@ -101,7 +104,7 @@
 	                   			window.location.reload();
 	                    }).error(function(error){
 	                    	console.log(error);
-	                    })
+	                    })*/
 			},
 			uploadFile:function(that){
 						console.log(that);
@@ -128,108 +131,63 @@
 		return{
 			restrict:'A',
 			scope:{
-				order:'@',
-				uploadbook:'&'
+				order:'=',
+				upload:'&'
 			},
 			template:
-								"<td>{{orders.uuid}}</td>"
-								+"<td>{{orders.personName}}</td>"
-								+"<td>{{orders.phoneNumber}}</td>"
+								"<td>{{order.uuid}}</td>"
+								+"<td>{{order.personName}}</td>"
+								+"<td>{{order.phoneNumber}}</td>"
 								+"<td>{{book}}</td>"
 								+"<td>{{type}}</td>"
-								+"<td>{{status}}</td>"
+								+"<td class='drCell'>"
+									+"<div>"
+										+"<p>状态</p>"
+										+"<select ng-model = 'order.postdata.type' ng-options='book.name for book in bookSelect'>"
+											+"<option value=''>请选择</option>"
+										+"</select>"
+									+"</div>"
+									+"<div>"
+										+"<p>进度</p>"
+										+"<input ng-model = 'order.postdata.schedule' type='text'>"
+									+"</div>"
+									+"<div>"
+										+"<p>附件</p>"
+										+"<input class='btn btn-default' type='file'></input>"
+									+"</div>"
+									+"<a>详情</a>"		
+								+"</td>"
 								+"<td>"
-									+"<input class='btn btn-default' ng-click='click(this)' type='button' value='{{buttontext}}' style = 'display:{{buttonshow}}'></input>"
-									+"<p ng-bind='upload' style='display:{{uploadshow}}'><p>"
-									+"<input class='btn btn-default' ng-click='click()' type='file'  style='display:{{uploadshow}}'></input>"
+									+"<input class='btn btn-default' ng-click='upload(this)' type='button' value='提交'></input>"
 								+"</td>",
-			link:function(scope,elem,attr){
-				scope.orders = JSON.parse(scope.order);
-				scope.type = '';
-				scope.uploadshow = 'none !important';
-				scope.buttonshow = 'none !important';
-				if(scope.orders.businessEntrust==1){
-					scope.type += '注销抵押';
-					if(scope.orders.cancelStatus==0){
-						scope.status = '未办理';
-						scope.buttontext = '办理注销抵押';
-					}	
-					if(scope.orders.cancelStatus==1){
-						scope.status = '办理中';
-						scope.upload = '上传注销抵押凭证';
-					}
-					if(scope.orders.cancelStatus==2)
-						scope.status = '注销抵押完成';
+			link:function(scope,elem,attr){;
+				scope.order.postdata ={};
+				scope.bookSelect =[{id:1,name:'预约中'},{id:2,name:'处理中'},{id:3,name:'已完成'},{id:4,name:'已关闭'}];
+				if(scope.order.businessEntrust==1){
+					scope.type = '注销抵押';
 				}
-				if(scope.orders.businessEntrust==2){
-					scope.type += '房产过户';
-					if(scope.orders.transferStatus==0){
-						scope.status = '未办理';
-						scope.buttontext = '办理房产过户';
-					}
-					if(scope.orders.transferStatus==1){
-						scope.status = '办理中';
-						scope.upload = '上传二手买卖凭证';
-					}
-					if(scope.orders.transferStatus==2){
-						scope.status = '打印二手买卖合同';
-						scope.upload = '上传过户凭证';
-					}
-					if(scope.orders.transferStatus==3)
-						scope.status = '过户完成';
+				if(scope.order.businessEntrust==2){
+					scope.type = '房产过户';
 				}
-				if(scope.orders.businessEntrust==3){
-					scope.type += '取新房产证';
-					if(scope.orders.hourseStatus==0){
-						scope.buttontext = '办理取新房产证';
-						scope.status = '未办理';
-					}
-					if(scope.orders.hourseStatus==1){
-						scope.status = '办理中';
-						scope.upload = '上传取新房产证凭证';
-					}
-						
-					if(scope.orders.hourseStatus==2)
-						scope.status = '取新房产证完成';
+				if(scope.order.businessEntrust==3){
+					scope.type = '取新房产证';
 				}
-				if(scope.orders.businessEntrust==4){
-					scope.type += '贷款抵押';
-					if(scope.orders.loanStatus==0){
-						scope.buttontext = '办理贷款抵押';
-						scope.status = '未办理';
-					}
-					if(scope.orders.loanStatus==1){
-						scope.status = '办理中';
-						scope.upload = '上传贷款抵押';
-					}	
-					if(scope.orders.loanStatus==2)
-						scope.status = '贷款抵押完成';
+				if(scope.order.businessEntrust==4){
+					scope.type = '贷款抵押';
 				}
-				if(scope.orders.bookStatus==0){
+				if(scope.order.bookStatus==0){
 					scope.book = '未预约';
-					scope.buttontext = '电话预约';
-					scope.buttonshow = 'inline-block !important';
-					scope.click = scope.uploadbook;
 				}
-				else if(scope.orders.bookStatus==1){
-					scope.click = 
+				else if(scope.order.bookStatus==1){
 					scope.book = '预约中';
-					scope.upload = '预约取号';
-					scope.uploadshow = 'inline-block !important';
 				}
-				else if(scope.orders.bookStatus==2){
+				else if(scope.order.bookStatus==2){
 					scope.book = '预约中';
-					scope.upload = '办理全权交接';
-					scope.uploadshow = 'inline-block !important';
 				}
 				else{
 					scope.book = '已预约';
 				}
 
-				if(scope.buttontext&&scope.buttontext!=''&&scope.orders.bookStatu>2)
-					scope.buttonshow = 'inline-block !important';
-				if(scope.upload&&scope.upload!=''&&scope.orders.bookStatu>2)
-					scope.uploadshow = 'inline-block !important';
 			}
 		}
 	});

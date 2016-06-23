@@ -103,15 +103,11 @@ var mySwiper = new Swiper('.swiper-container', {
 		return{
 			post:function(scope){
 				$http.post('/api/xwdc/orderSubmit',scope.inputs).success(function(data,header,config,status){
-					console.log(data);
-					console.log(scope.inputs);	
-					if(data)
-						if(data.uuid&&data.E0019){
-							scope.success.orderNum = data.uuid;
-							mySwiper.slideTo(5, 200, false);
-						}
+					if(data.uuid&&data.E0019){
+						scope.success.orderNum = data.uuid;
+						mySwiper.slideTo(5, 200, false);
+					}
 				}).error(function(data,header,config,status){
-					console.log(data);
 					if(data.E0018)
 						scope.errors = '系统转换错误';
 					else

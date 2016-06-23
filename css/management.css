@@ -57,8 +57,10 @@ table th,td{
 	border: 1px solid #ddd;
 	text-align: center;
 }
-table input,p{
+td *{
 	margin: 0 auto;
 	display: inline-block !important;
+	margin : 0 2rem;
 }
+
 

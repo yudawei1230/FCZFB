@@ -31,12 +31,8 @@
 					</div>
 					<div class='cols'>
 						<p>业务类型</p>
-						<select ng-model="input.type">
-							<option value="预约" selected='selected'>预约</option>
-							<option value="注销抵押">注销抵押</option>
-							<option value="过户">过户</option>
-							<option value="取新房产证">取新房产证</option>
-							<option value="贷款抵押">贷款抵押</option>
+						<select ng-model="input.type" ng-options='type.name for type in types'>
+							<option value="">请选择</option>
 						</select>
 					</div>
 					<div class="cols">
@@ -57,7 +53,7 @@
 						<th>进度</th>
 						<th>操作</th>
 					</thead>
-					<tbody order = '{{order}}' ng-repeat = 'order in orders track by $index' uploadbook='uploadbook(this)'></tbody>
+					<tbody order = 'order' ng-repeat = 'order in orders track by $index' upload='upload(this)'></tbody>
 				</table>
 			</form>
 		</aside>
