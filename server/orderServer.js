@@ -4,6 +4,7 @@ var file = require('./file.js')
 var post = require('./post.js')
 var port = 80;
 http.createServer(function(req,res){
+	req.url = req.url.split('?')[0];
 	if(req.url.indexOf('.')>-1)
 		file.file(req,res,req.url,req.url.split('.')[req.url.split('.').length-1])
 	else if(req.url=='/')
@@ -12,5 +13,7 @@ http.createServer(function(req,res){
 		post.orderSubmit(req,res);
 	else if(req.url =='/api/xwdc/searchByUserName')
 		post.searchOrderByPhone(req,res);
+	else if(req.url =='/statuschange')
+		post.changeStatus(req,res);
 }).listen(port);
 console.log('listen in port '+port+' !')

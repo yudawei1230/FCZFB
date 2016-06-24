@@ -1,15 +1,31 @@
+var module = angular.module('myApp',[]);
 !function(){
-	var module = angular.module('myapp',[]);
 	module.controller('myctrl',['$scope','init',function($scope,init){
 		init.initAll($scope);
-
+		$scope.parseUrl();
 	}]);
 	module.factory('init',['ajax',function(ajax){
 		function initFn(scope){
 			scope.getData = ajax.getData;
-			scope.upload = function(that){
-				ajax.upload(that);
+			scope.upload = function(ownScope){
+				ajax.upload(ownScope);
 			};
+			scope.onFileSelect = function($files) { 
+			 	console.log($files);
+			}
+			scope.statuschange = function(ownScope){
+				ajax.statuschange(scope,ownScope.order)
+			}
+			scope.parseUrl = function(){
+				var a = window.location.href.split('?')[1].split('&')[0].split('=');
+				var json = {};
+				for(var i=0;i<a.length;i++)
+				{
+				    json[a[i]]=a[++i];
+				}
+				scope.input = json;
+				scope.getData(scope);
+			}
 		}
 		function initVa(scope){
 			scope.orders = [];
@@ -28,49 +44,10 @@
 			getData:function(scope){
 				if(scope.input.phone){
 					$http.post('/api/xwdc/searchByUserName',{username:scope.input.phone}).success(function(data){
-						if(data.S0019){
-							scope.orders = [];
-							var p = [];
-							for(i in data.list){
-								if(data.list[i].businessEntrust.split(',').length>1){
-										num = data.list[i].businessEntrust.split(',');
-										function type(){
-											var item = num;
-											var a = 0;
-											var json ={};
-											var tar = data.list[i];
-									
-											return function (){
-												var type = num[a++];
-												var schedule,scheduleVal;
-												switch(type){
-													case 1:schedule = 'cancelStatus';scheduleVal = tar.cancelStatus;break;
-													case 2:schedule = 'transferStatus';scheduleVal = tar.transferStatus;break;
-													case 3:schedule = 'hourseStatus';scheduleVal = tar.hourseStatus;break;
-													case 4:schedule = 'loanStatus';scheduleVal = tar.loanStatus;break;
-												}
-												return {
-													businessEntrust:type,
-													personName:tar.personName,
-													phoneNumber:tar.phoneNumber,
-													uuid:tar.uuid,
-													cancelStatus:tar.cancelStatus,
-													transferStatus:tar.transferStatus,
-													hourseStatus:tar.hourseStatus,
-													loanStatus:tar.loanStatus,
-													bookStatus:tar.bookStatus
-												};
-											}
-										}
-										var newtype = new type;
-										for( j in num){
-											scope.orders.push(newtype()) ;
-										}
-								}
-								else
-									scope.orders.push(data.list[i]);
-							}
-						}
+						if(data.S0019)
+							scope.orders = data.list;
+						else if(data.E0021)
+							alert('没有订单');
 					});
 				}
 				else
@@ -83,11 +60,13 @@
 							data.businessEntrust = type[i];
 						}
 					}
+					else if(data.E0021)
+						alert('没有订单');
 				})
 			},
 			upload:function(that){
+				//console.log(document.getElementById(that.order.uuid).files[0])
 				console.log(that);
-				//console.log(scope);
 /*				       var fd = new FormData();
 				        //var file = document.querySelector('input[type=file]').files[0];
 				        fd.append('nextName', 'bookStatus');  
@@ -105,6 +84,19 @@
 	                    }).error(function(error){
 	                    	console.log(error);
 	                    })*/
+			},
+			statuschange:function(scope,ownScope){
+				$http.post('/statuschange',{'orderid':ownScope.uuid,'Status':ownScope.Status}).success(function(data){
+					if(data.E0019){
+						var href ='?'
+						for(i in scope.input){
+							if(scope.input[i]&&i!='type')
+							href += i+'='+scope.input[i]+'&';
+						}
+						href = href.substr(0,href.length-1);
+						window.location.href =href; 
+					}
+				})
 			},
 			uploadFile:function(that){
 						console.log(that);
@@ -132,64 +124,94 @@
 			restrict:'A',
 			scope:{
 				order:'=',
-				upload:'&'
+				upload:'&',
+				statuschange:'&'
 			},
 			template:
 								"<td>{{order.uuid}}</td>"
 								+"<td>{{order.personName}}</td>"
 								+"<td>{{order.phoneNumber}}</td>"
-								+"<td>{{book}}</td>"
 								+"<td>{{type}}</td>"
-								+"<td class='drCell'>"
+								+"<td>{{book}}</td>"
+								+"<td ng-bind='new'></td>"
+								+"<td>"
+									+"<input class='btn btn-default' ng-click='upload()' type='button' value='提升进度'></input>"
+									//+'<button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">提升进度</button>'
+								+"</td>"
+								+"<td>"
 									+"<div>"
-										+"<p>状态</p>"
 										+"<select ng-model = 'order.postdata.type' ng-options='book.name for book in bookSelect'>"
 											+"<option value=''>请选择</option>"
 										+"</select>"
 									+"</div>"
+								+"</td>",
+			link:function(scope,elem,attr){
+				scope.order.postdata ={};
+				scope.type = '';
+				scope.bookSelect =[{id:0,name:'未预约'},{id:1,name:'预约中'},{id:2,name:'处理中'},{id:3,name:'已完成'},{id:4,name:'已关闭'}];
+				if(scope.order.businessEntrust.indexOf('1')>-1){
+					scope.type += '注销抵押,';
+				}
+				if(scope.order.businessEntrust.indexOf('2')>-1){
+					scope.type += '房产过户,';
+				}
+				if(scope.order.businessEntrust.indexOf('3')>-1){
+					scope.type += '取新房产证,';
+				}
+				if(scope.order.businessEntrust.indexOf('4')>-1){
+					scope.type += '贷款抵押,';
+				}
+				scope.type = scope.type.substr(0,scope.type.length-1);
+				if(scope.order.Status==0){
+					scope.book = '未预约';
+				}
+				else if(scope.order.Status==1){
+					scope.book = '预约中';
+				}
+				else if(scope.order.Status==2){
+					scope.book = '处理中';
+				}
+				else if(scope.order.Status==3){
+					scope.book = '已完成';
+				}
+				else{
+					scope.book = '已关闭';
+				}
+				if(scope.schedule){
+
+				}
+				else{
+					scope.new = '无最新进度';
+				}
+				scope.$watch('order.postdata.type',function(news,olds){
+					if(news&&news.name!=scope.book){
+						if(news.name =='未预约')
+							scope.order.Status = 0;
+						else if(news.name =='预约中')
+							scope.order.Status = 1;
+						else if(news.name =='处理中')
+							scope.order.Status = 2;
+						else if(news.name =='已完成')
+							scope.order.Status = 3;
+						else
+							scope.order.Status = 4;
+							scope.statuschange();
+							//scope.book == news.name;
+					}				
+				})
+			}
+		}
+	});
+
+}()
+/*
+
 									+"<div>"
 										+"<p>进度</p>"
 										+"<input ng-model = 'order.postdata.schedule' type='text'>"
 									+"</div>"
 									+"<div>"
 										+"<p>附件</p>"
-										+"<input class='btn btn-default' type='file'></input>"
+										+"<input class='btn btn-default' type='file' id='{{order.uuid}}'></input>"
 									+"</div>"
-									+"<a>详情</a>"		
-								+"</td>"
-								+"<td>"
-									+"<input class='btn btn-default' ng-click='upload(this)' type='button' value='提交'></input>"
-								+"</td>",
-			link:function(scope,elem,attr){;
-				scope.order.postdata ={};
-				scope.bookSelect =[{id:1,name:'预约中'},{id:2,name:'处理中'},{id:3,name:'已完成'},{id:4,name:'已关闭'}];
-				if(scope.order.businessEntrust==1){
-					scope.type = '注销抵押';
-				}
-				if(scope.order.businessEntrust==2){
-					scope.type = '房产过户';
-				}
-				if(scope.order.businessEntrust==3){
-					scope.type = '取新房产证';
-				}
-				if(scope.order.businessEntrust==4){
-					scope.type = '贷款抵押';
-				}
-				if(scope.order.bookStatus==0){
-					scope.book = '未预约';
-				}
-				else if(scope.order.bookStatus==1){
-					scope.book = '预约中';
-				}
-				else if(scope.order.bookStatus==2){
-					scope.book = '预约中';
-				}
-				else{
-					scope.book = '已预约';
-				}
-
-			}
-		}
-	});
-
-}()
+									+"<a>详情</a>"	*/

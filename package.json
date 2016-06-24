@@ -1,0 +1,24 @@
+{
+  "name": "fcjyb",
+  "version": "1.0.0",
+  "description": "dasd",
+  "main": "orderData.js",
+  "dependencies": {
+    "express": "^4.14.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yudawei1230/FCZFB.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yudawei1230/FCZFB/issues"
+  },
+  "homepage": "https://github.com/yudawei1230/FCZFB#readme"
+}

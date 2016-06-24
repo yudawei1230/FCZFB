@@ -8,6 +8,8 @@
 	this.searchOrderByPhone = function(req,res){
 		read.readOrderByPhone(req,res);
 	};
-	//console.log(this);
+	this.changeStatus = function(req,res){
+		write.changestatus(req,res)
+	}
 	module.exports = this;
 }()
