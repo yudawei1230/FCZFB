@@ -17,6 +17,8 @@ var module = angular.module('myApp',[]);
 				ajax.statuschange(scope,ownScope.order)
 			}
 			scope.parseUrl = function(){
+				if(window.location.href.indexOf('?')==-1)
+					return;
 				var a = window.location.href.split('?')[1].split('&')[0].split('=');
 				var json = {};
 				for(var i=0;i<a.length;i++)
@@ -64,14 +66,14 @@ var module = angular.module('myApp',[]);
 						alert('没有订单');
 				})
 			},
-			upload:function(that){
-				//console.log(document.getElementById(that.order.uuid).files[0])
-				console.log(that);
-/*				       var fd = new FormData();
-				        //var file = document.querySelector('input[type=file]').files[0];
-				        fd.append('nextName', 'bookStatus');  
-				        fd.append('nextStatus',0);
-				        fd.append('orderid', '74ed7af2a0ec');
+			upload:function(ownScope){
+				console.log(ownScope);
+				       var fd = new FormData();
+				        var file = document.getElementById(ownScope.order.uuid).files[0];
+				        fd.append('file', file);
+				        fd.append('nextName', 'schedule');  
+				        fd.append('schedule',ownScope.order.postdata.schedule);
+				        fd.append('orderid', ownScope.order.uuid);
 			        	$http({
 				            method:'POST',
 				            url:"/api/xwdc/upload",
@@ -83,7 +85,7 @@ var module = angular.module('myApp',[]);
 	                   			window.location.reload();
 	                    }).error(function(error){
 	                    	console.log(error);
-	                    })*/
+	                    })
 			},
 			statuschange:function(scope,ownScope){
 				$http.post('/statuschange',{'orderid':ownScope.uuid,'Status':ownScope.Status}).success(function(data){
@@ -133,10 +135,12 @@ var module = angular.module('myApp',[]);
 								+"<td>{{order.phoneNumber}}</td>"
 								+"<td>{{type}}</td>"
 								+"<td>{{book}}</td>"
-								+"<td ng-bind='new'></td>"
 								+"<td>"
-									+"<input class='btn btn-default' ng-click='upload()' type='button' value='提升进度'></input>"
-									//+'<button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">提升进度</button>'
+									+"<p ng-bind='new'></p>"
+									+"<a>详情</a>"
+								+"</td>"
+								+"<td>"
+									+'<button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">添加进度</button>'
 								+"</td>"
 								+"<td>"
 									+"<div>"
@@ -144,7 +148,31 @@ var module = angular.module('myApp',[]);
 											+"<option value=''>请选择</option>"
 										+"</select>"
 									+"</div>"
-								+"</td>",
+								+"</td>"
+								+'<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">'
+								  +'<div class="modal-dialog" role="document">'
+								    +'<div class="modal-content">'
+								      +'<div class="modal-header">'
+								        +'<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'
+								        +'<h4 class="modal-title" id="myModalLabel">进度操作</h4>'
+								      +'</div>'
+								      +'<div class="modal-body">'
+											+'<div>'
+												+'<p>进度</p>'
+												+'<input ng-model = "order.postdata.schedule" type="text">'
+											+'</div>'
+											+'<div>'
+												+'<p>附件</p>'
+												+'<input class="btn btn-default" type="file" id="{{order.uuid}}">'
+											+'</div>'
+								      +'</div>'
+								      +'<div class="modal-footer">'
+								        +'<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>'
+								        +'<button type="button" class="btn btn-primary" ng-click="upload(this)">添加进度</button>'
+								      +'</div>'
+								    +'</div>'
+								  +'</div>'
+								+'</div>',
 			link:function(scope,elem,attr){
 				scope.order.postdata ={};
 				scope.type = '';
@@ -196,22 +224,10 @@ var module = angular.module('myApp',[]);
 						else
 							scope.order.Status = 4;
 							scope.statuschange();
-							//scope.book == news.name;
 					}				
-				})
+				});
 			}
 		}
 	});
 
 }()
-/*
-
-									+"<div>"
-										+"<p>进度</p>"
-										+"<input ng-model = 'order.postdata.schedule' type='text'>"
-									+"</div>"
-									+"<div>"
-										+"<p>附件</p>"
-										+"<input class='btn btn-default' type='file' id='{{order.uuid}}'></input>"
-									+"</div>"
-									+"<a>详情</a>"	*/

@@ -15,5 +15,7 @@ http.createServer(function(req,res){
 		post.searchOrderByPhone(req,res);
 	else if(req.url =='/statuschange')
 		post.changeStatus(req,res);
+	else if(req.url =='/api/xwdc/upload')
+		post.upload(req,res);
 }).listen(port);
 console.log('listen in port '+port+' !')

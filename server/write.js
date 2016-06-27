@@ -106,5 +106,18 @@
 
         });
 	}
+    this.uploadSchedule = function(req,res){
+        var postData='';
+        var callbackData = {};
+        var submitData = {};
+        var time = new Date().getTime();
+        req.setEncoding("utf-8");
+        req.addListener("data", function(data) {
+            postData += data;
+        });
+        req.addListener('end',function(){
+            console.log(postData);
+        })
+    }
 	module.exports = this;
 }()

@@ -9,7 +9,10 @@
 		read.readOrderByPhone(req,res);
 	};
 	this.changeStatus = function(req,res){
-		write.changestatus(req,res)
+		write.changestatus(req,res);
+	}
+	this.upload = function(req,res){
+		write.uploadSchedule(req,res);
 	}
 	module.exports = this;
 }()
