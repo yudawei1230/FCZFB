@@ -37,57 +37,64 @@
 		var proxy = new eventproxy();
 		var businessEntrust ={};
 		var schedule = {};
-		var ok = 0;
 		var resWrite = function(){
-			if(ok++!=1)
-				return;
-			console.log(businessEntrust);
 			callbackData.list.forEach(function(item,index){
 				item.businessEntrust = businessEntrust['id'+item.uuid];
 				item.schedule = schedule['id'+item.uuid];
+				if(index == callbackData.length-1)
+				{
+					console.log(1);
+				}
 			});
-			callbackData.S0019 = 'ORDER_SUCCESS';
-			res.writeHead(200, {'Content-Type': 'application/json'});
-			res.write(JSON.stringify(callbackData));
-			res.end();
 		}
 		callbackData.list.forEach(function(item,index){
 			businessEntrust['id'+item.uuid] = [];
 			schedule['id'+item.uuid] = [];
-			fs.readFile('./orderType.js',function(err,data){
-				if(err){
-					throw err;
-					res.writeHead(404, {'Content-Type': 'application/json'});
-					res.end();
-				}
-				else{
-					JSON.parse('['+data+']').forEach(function(items,indexs){
-						if(item.uuid == items.uuid){
-							businessEntrust['id'+item.uuid].push(items.type);
-						}
-					});
-					if(index == callbackData.list.length-1){
-						resWrite();
+			try{
+				JSON.parse('['+fs.readFileSync('./orderType.js','utf-8')+']').forEach(function(items,indexs){
+					if(item.uuid == items.uuid){
+						businessEntrust['id'+item.uuid].push(items.type);
 					}
+				});
+				JSON.parse('['+fs.readFileSync('./orderSchedule.js','utf-8')+']').forEach(function(items,indexs){
+					if(item.uuid == items.uuid)
+						schedule['id'+item.uuid].push(items);
+				});
+				resWrite();
+			}catch(e){
+				throw e;
+				res.writeHead(404, {'Content-Type': 'application/json'});
+				res.end();
+			}
+
+		});
+		callbackData.S0019 = 'ORDER_SUCCESS';
+		res.writeHead(200, {'Content-Type': 'application/json'});
+		res.write(JSON.stringify(callbackData));
+		res.end();
+	}
+	this.getOrderById = function(src,id){
+		var data={};	
+		try{
+			var order = JSON.parse('['+fs.readFileSync(src,'utf-8')+']');
+			order.forEach(function(item,index){
+				if(item.uuid == id)
+				{
+					data.index = index;
+					data.order = order;
 				}
 			});
-			fs.readFile('./orderSchedule.js',function(err,data){
-				if(err){
-					throw err;
-					res.writeHead(404, {'Content-Type': 'application/json'});
-					res.end();
-				}
-				else{
-					JSON.parse('['+data+']').forEach(function(items,indexs){
-						if(item.uuid == items.uuid)
-							schedule['id'+item.uuid].push(items);
-					});
-					if(index == callbackData.list.length-1){
-						resWrite();
-					}
-				}
-			})
-		});
+			return data;
+		}catch(e){
+			console.log(e);
+		}	
+	}
+	this.readFile = function(src){
+		try{
+			return fs.readFileSync(src,'utf-8')
+		}catch(e){
+			console.log(e);
+		}	
 	}
 	module.exports = this;
 }()

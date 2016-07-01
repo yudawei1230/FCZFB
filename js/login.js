@@ -318,10 +318,10 @@ module.exports = function(myapp){
 	myapp.directive('login',function(){
 		return{
 			link:function(scope,element,attr){
-				if(localStorage.getItem('username')&&localStorage.getItem('password'))
+				if(localStorage.getItem('userName')&&localStorage.getItem('password'))
 				{
 					scope.user={
-						username:localStorage.getItem('userName'),
+						userName:localStorage.getItem('userName'),
 						password:localStorage.getItem('password')
 					}
 					scope.check = true;
@@ -344,7 +344,7 @@ module.exports = function(myapp){
 					{
 						if(scope.check)
 						{
-							localStorage.setItem("username", scope.user.userName); 
+							localStorage.setItem("userName", scope.user.userName); 
 							localStorage.setItem("password", scope.user.password); 
 						}
 						scope.login(scope.user);
@@ -523,7 +523,7 @@ module.exports = function(myapp){
 module.exports = function(myapp){
 	myapp.factory('logins',['$http',function($http,data){
 		this.login = function(data){
-			 return $http.post('/api/xwdc_login',data);
+			 return $http.post('/api/xwdc_login/login',data);
 		}
 		return{
 			login:this.login
@@ -537,8 +537,7 @@ module.exports = function(myapp){
 					data = what;
 					what = 'register';
 				}
-				console.log(data);
-				return $http.post('/api/xwdc_register',data);
+				return $http.post('/api/xwdc_register/register',data);
 			}
 		}
 	}]);
@@ -554,8 +553,11 @@ myapp.controller('login',['$scope','$timeout','logins','registers',function($sco
 		logins.login(user).then(function(res){
 			if(res.data.E0003)
 				alert('请输入正确的密码');
-			else if(res.data.S0009)
-				 window.location.href='/management.html';
+			else if(res.data.S0009){
+				sessionStorage.setItem('us',user.userName);
+				window.location.href='/management.html';
+			}
+				 
 		});
 	};
 	$scope.register = function(user){

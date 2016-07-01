@@ -3,7 +3,7 @@ module.directive('article',function(){
 		restrict:'AE',
 		scope:{
 			personname:'@',
-			businessentrust:'@',
+			businessentrust:'=',
 			ordernum:'@'
 		},
 		template:   '<p ng-bind="num"></p>'
@@ -11,30 +11,26 @@ module.directive('article',function(){
 					+'<p ng-bind="type"></p>',
 		link:function(scope,elem,attr){					
 			if(scope.ordernum)
-			{
-				scope.ordernum = '订单号： '+scope.ordernum;
-				scope.num = scope.ordernum;
-			}
+				scope.num = '订单号： '+scope.ordernum;
 			if(scope.personname)
 			{
 				scope.personname='预约人姓名： '+scope.personname;
 				scope.name = scope.personname;
 			}
 			if(scope.businessentrust){
-				scope.businessentrust.split(',').forEach(function(item,index){
+				scope.businessentrust.forEach(function(item,index){
 					if(index==0)
-						scope.businessentrust='业务类型： ';
-					if(item==1)
-						scope.businessentrust += '注销抵押,';
-					else if(item==2)
-						scope.businessentrust += '房产过户,';
-					else if(item==3)
-						scope.businessentrust += '取新房产证,';
+						scope.type='业务类型： ';
+					if(item.businessEntrust==1)
+						scope.type += '注销抵押,';
+					else if(item.businessEntrust==2)
+						scope.type += '房产过户,';
+					else if(item.businessEntrust==3)
+						scope.type += '取新房产证,';
 					else
-						scope.businessentrust += '贷款抵押,';
+						scope.type += '贷款抵押,';
 				});
-				scope.businessentrust =scope.businessentrust.slice(0,scope.businessentrust.length-1);
-				scope.type = scope.businessentrust;
+				scope.type =scope.type.slice(0,scope.type.length-1);
 			}
 			
 		}

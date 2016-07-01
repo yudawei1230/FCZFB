@@ -1,6 +1,7 @@
 !function(){
 	var fs = require('fs')
-
+    var multiparty = require('multiparty');
+    var read = require('./read.js');
 	this.validate = function(request,type){
          for(var i in dataName[type]){
             if(!request.body[i])
@@ -107,17 +108,65 @@
         });
 	}
     this.uploadSchedule = function(req,res){
-        var postData='';
-        var callbackData = {};
-        var submitData = {};
-        var time = new Date().getTime();
-        req.setEncoding("utf-8");
-        req.addListener("data", function(data) {
-            postData += data;
-        });
-        req.addListener('end',function(){
-            console.log(postData);
-        })
+        var form = new multiparty.Form({uploadDir: '../upload/'});
+        //上传完成后处理
+        form.parse(req, function(err, fields, files) {
+            var file = JSON.parse(JSON.stringify(files,null,2));
+            var data = JSON.parse(JSON.stringify(fields,null,2));
+        if(err){
+            console.log('parse error: ' + err);
+        } else {
+            if(file.file){
+                var uploadedPath = file.file[0].path+'';
+                var dstPath = '../upload/' + file.file[0].originalFilename;
+                //重命名为真实文件名
+                fs.rename(uploadedPath, dstPath, function(err) {
+                    if(err){
+                        console.log('rename error: ' + err);
+                    }else{
+                        var orderData = read.readFile('./orderSchedule.js');
+                        var time = new Date().getTime();
+                        var newData = JSON.stringify({'uuid':data.orderid[0],'schedule':data.schedule[0],'scheduleImage':dstPath,'uploadTime':time});
+                        if(orderData!='')
+                            orderData = orderData+','+newData;
+                        else
+                            orderData = newData;
+                        if(this.writeFile('./orderSchedule.js',orderData))
+                        {
+                            res.writeHead(200, {'Content-Type': 'application/json'});
+                            res.write(JSON.stringify({S0023:"ORDER_SUCCESS"}));
+                            res.end();  
+                        }
+                    }
+                });
+            }
+            else{
+                var orderData = read.readFile('./orderSchedule.js');
+                var time = new Date().getTime();
+                var newData = JSON.stringify({'uuid':data.orderid[0],'schedule':data.schedule[0],'uploadTime':time});
+                if(orderData!='')
+                    orderData = orderData+','+newData;
+                else
+                    orderData = newData;
+                if(this.writeFile('./orderSchedule.js',orderData))
+                {
+                    res.writeHead(200, {'Content-Type': 'application/json'});
+                    res.write(JSON.stringify({S0023:"ORDER_SUCCESS"}));
+                    res.end();  
+                }
+            }
+        }
+    });
+    }
+    this.writeFile = function(src,data){
+        try{
+            fs.writeFileSync(src,data);
+            return true;
+        }catch(e){
+            console.log(e);
+            return false;
+        }
+        
     }
 	module.exports = this;
 }()

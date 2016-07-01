@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <title>盒子支付大数据</title>
+    <link rel="stylesheet" type="text/css" href="css/heard_bottom.css"/>
+    <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="js/UtilTool.js"></script>
+</head>
+<body ng-app="app_index">
+
+<!--头部-->
+<div class="hear">
+    <div class="hear_top"></div>
+    <div class="hear_nav">
+        <div class="hear_navlist">
+
+            <div class="hear_logo"><img src="images/ibox_logo.png"/></div>
+            <ul>
+                <li class=""><a href="index.html">钱包配置</a></li>
+                <li class="qianhe_cur"><a href="appindex.html">钱包首页配置</a></li>
+            </ul>
+            <div class="clear"></div>
+            <div class="nav_right">perAdmin[权限系统管理角色] <span class="fenxian">|</span> <a href="#">[退出]</a></div>
+        </div>
+    </div>
+</div>
+
+<div class="main" ng-controller="appindexController">
+    <div class="main_right">
+        <div id="main_content">
+            <div class="appindex">
+                <div class="appcontaner">
+                    <div class="areas index0" style='order:{{page.pages[0].areas[0].index}}'>
+                        <div class="area_type1_part">
+                            <ul>
+                                <li><img src="images/banner.png"></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="areas index1" style='order:{{page.pages[0].areas[1].index}}'>
+                        <div class="area_type2_part">
+                            <ul>                        
+                                <area1 ng-repeat='item in page.pages[0].areas[1].blocks' block='item' area='page.pages[0].areas[1]' choice='choice'></area1>
+                                <div class="clear"></div>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="areas index2" style='order:{{page.pages[0].areas[2].index}}'>
+
+                        <div class="area_type3_part">
+                            <ul>
+                                <li class="first_li">
+                                    <p><img src="images/new_per.png"></p>
+
+                                    <p>新人专享</p>
+
+                                    <p>领取5000元优惠券</p>
+                                </li>
+                                <li class="secli">
+                                    <div class="first_li">
+                                        <div class="type3_icon"><p><img src="images/hui_zh.png"></p></div>
+                                        <div class="type3_det">
+                                            <p>汇赚钱</p>
+
+                                            <p>收益年化14%</p>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div>
+
+                                    <div class="first_li first_li2">
+                                        <div class="type3_icon">
+                                            <p><img src="images/help_h.png"></p>
+                                        </div>
+                                        <div class="type3_det">
+                                            <p>帮你还</p>
+
+                                            <p>借款就告我</p>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div>
+
+                                </li>
+                                <div class="clear"></div>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <div class="areas index3" style='order:{{page.pages[0].areas[3].index}}'>
+                        <div class="area_type4_part">
+                            <ul>                        
+                                <area1 ng-repeat='item in page.pages[0].areas[3].blocks' block='item' area='page.pages[0].areas[3]' choice='choice'></area1>
+                                <div class="clear"></div>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="menu">
+                        <ul>
+                            <li>
+                                <img src="images/icon_w.png">
+                            </li>
+                                                        <li>
+                                <img src="images/icon_w.png">
+                            </li>
+                                                        <li>
+                                <img src="images/icon_w.png">
+                            </li>
+                                                        <li>
+                                <img src="images/icon_w.png">
+                            </li>
+
+                            <div class="clear"></div>
+                        </ul>
+                    </div>
+                </div>
+                <div class="cofig" >
+                    <input type="text" placeholder='主题名字' ng-model='page.name'>
+                    <div ng-repeat='item in page.pages[0].areas'>
+                        <p ng-bind='item.text'></p>
+                        <input type="text" placeholder='{{item.text}}' ng-model='item.index'>
+                        <input type="button" value='add' ng-click='add(item.type)'>
+                        <input type="button" value='delete' ng-click='delete(item.type)'>
+                        <input type="button" value='submit' ng-click='submit()'>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div ng-repeat='pic in pics' ng-click='choose(pic)'>
+            <img src="{{pic.icon}}" alt="">
+            <p ng-bind="{{pic.text}}"></p>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+<script type="text/javascript" src="js/angular-1.0.1.min.js"></script>
+<script type="text/javascript" src="controller/index.js"></script>
+<script type="text/javascript" src='directive/menu.js'></script>
+<script type="text/javascript" src="factory/appIndexFactory.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+  
+  
+
+

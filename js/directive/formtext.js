@@ -25,61 +25,61 @@ module.directive('formtext',function(){
 				   		+'</div>'
 		   			+'</div>'
 		   			,
-		   			link:function(scope,elem,attr){
-		   				if(scope.type =='FGH'){
-		   					scope.buttonStyle = '20%';
-		   					scope.maskStyle="left:100%;top:0%";
-	   						scope.dialogStyle='left:150%;top:200px';
-	   						scope.num = 0;
-		   				}else{
-		   					scope.buttonStyle = '10%';
-		   					scope.maskStyle="left:200%;top:0%";
-		   					scope.dialogStyle='left:250%;top:200px';
-		   					scope.num = 1;
-		   				}
-		   				scope.validate = function(data){
-		   					var text = [{
-									"personName":"预约人姓名",
-									"phoneNumber": "手机号码",
-									"certificateNo":"身份证号码",
-									"houseAddress":"房地产所在地",
-									"houseName": "房地产名称",
-									"ownershipType":"权属证明类型",
-									"ownershipNo":"权属证明编号"
-								},{
-									"personName":"买方姓名",
-									"phoneNumber": "买方手机号码",
-									"certificateNo":"买方身份证号码",
-									"sellerName":"卖方姓名",
-									"sellerPhoneNumber": "卖方手机号码",
-									"sellerCertificateNo":"卖方身份证号码",
-									"houseAddress":"房地产所在地",
-									"houseName": "房地产名称",
-									"ownershipType":"权属证明类型",
-									"ownershipNo":"权属证明编号"
-								}];
-		   					for(i in text[scope.num]){
-		   						if(data[i]&&data[i]!=''){
-		   							if(data[i]=='请选择'){
-		   								scope.error = '请选择'+text[scope.num][i];
-		   								return false;
-		   							}
-		   						}else{
-		   								scope.error = '请选择'+text[scope.num][i];
-		   								return false;
-		   						}
-		   					}
-		   					return true;
-		   				}
-		   				scope.submits = function(){
-		   					if(scope.validate(JSON.parse(scope.data)))
-		   						scope.clicks();
-		   					else
-		   						scope.ifshow = 'block';
-		   				}
-		   				scope.hide = function(){
-		   					scope.ifshow = 'none';
-		   				}
-		   			}
+		link:function(scope,elem,attr){
+			if(scope.type =='FGH'){
+				scope.buttonStyle = '20%';
+				scope.maskStyle="left:100%;top:0%";
+				scope.dialogStyle='left:150%;top:200px';
+				scope.num = 0;
+			}else{
+				scope.buttonStyle = '10%';
+				scope.maskStyle="left:200%;top:0%";
+				scope.dialogStyle='left:250%;top:200px';
+				scope.num = 1;
+			}
+			scope.validate = function(data){
+				var text = [{
+					"personName":"预约人姓名",
+					"phoneNumber": "手机号码",
+					"certificateNo":"身份证号码",
+					"houseAddress":"房地产所在地",
+					"houseName": "房地产名称",
+					"ownershipType":"权属证明类型",
+					"ownershipNo":"权属证明编号"
+				},{
+					"personName":"买方姓名",
+					"phoneNumber": "买方手机号码",
+					"certificateNo":"买方身份证号码",
+					"sellerName":"卖方姓名",
+					"sellerPhoneNumber": "卖方手机号码",
+					"sellerCertificateNo":"卖方身份证号码",
+					"houseAddress":"房地产所在地",
+					"houseName": "房地产名称",
+					"ownershipType":"权属证明类型",
+					"ownershipNo":"权属证明编号"
+				}];
+				for(i in text[scope.num]){
+					if(data[i]&&data[i]!=''){
+						if(data[i]=='请选择'){
+							scope.error = '请选择'+text[scope.num][i];
+							return false;
+						}
+					}else{
+							scope.error = '请选择'+text[scope.num][i];
+							return false;
+					}
+				}
+				return true;
+			}
+			scope.submits = function(){
+				if(scope.validate(JSON.parse(scope.data)))
+					scope.clicks();
+				else
+					scope.ifshow = 'block';
+			}
+			scope.hide = function(){
+				scope.ifshow = 'none';
+			}
+		}
 	}
 })

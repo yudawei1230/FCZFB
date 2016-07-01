@@ -1,0 +1,20 @@
+@charset "utf-8";
+/* CSS Document */
+.Wdate {
+    border: none;
+    width: 134px;
+    height: 24px;
+    background: #dce5ec url(../images/datePicker.gif) no-repeat 5px center;
+    border-radius: 2px;
+    text-align: center;
+    color: #999999;
+}
+
+.Wdate::-ms-clear {
+    display: none;
+}
+
+.WdateFmtErr {
+    font-weight: bold;
+    color: red;
+}

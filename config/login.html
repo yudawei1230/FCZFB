@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <title>盒子支付大数据</title>
+    <link rel="stylesheet" type="text/css" href="css/heard_bottom.css"/>
+    <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="js/highcharts.js"></script>
+    <script type="text/javascript" src="js/WdatePicker.js"></script>
+</head>
+<body>
+<!--头部-->
+<div class="hear">
+    <div class="hear_top"></div>
+    <div class="hear_nav">
+        <div class="hear_navlist">
+
+            <div class="hear_logo"><img src="images/ibox_logo.png"/></div>
+
+
+        </div>
+    </div>
+</div>
+
+<!--end-->
+
+<div class="main">
+
+    <div id="login">
+        <div class="mod-heading">
+            <h1>数据决策系统</h1>
+        </div>
+        <div class="mod-body clearfix">
+            <div class="figure pull-left">
+                <img width="385" height="235" alt="" src="images/login-figures.jpg">
+            </div>
+
+            <form onsubmit="return checkLoginData()" method="post" action=" " id="fm1">
+                <input type="hidden" value="0" id="isEncrypt">
+
+                <div class="form-group">
+                    <label>帐&#12288;户</label>
+                    <input type="text" autocomplete="off" size="25" value="" tabindex="1" class="form-control"
+                           name="username" id="systemName">
+
+                </div>
+                <div class="form-group">
+                    <label>密&#12288;码</label>
+                    <!-- <input type="password" id="systemPW" name="password" class="form-control"/> -->
+                    <input type="password" autocomplete="off" size="25" value="" tabindex="2" class="form-control"
+                           name="password" id="systemPW">
+                </div>
+
+                <label id="errorMsg"></label>
+
+                <div class="btn-box">
+                    <!-- <input type="button" name="submit" id="btnEp" class="btn btn-primary btn-block" onclick="checkLoginData()" value="登录"></input> -->
+                    <input type="submit" value="登录" class="btn btn-primary btn-block" id="btnEp" name="submit">
+                </div>
+
+                <section class="row btn-row">
+                    <input type="hidden" value="LT-137022-HaoLhjeD0MIeZqKXRqxodt0U2xneZy-cas01.example.org" name="lt">
+                    <input type="hidden" value="e2s1" name="execution">
+                    <input type="hidden" value="submit" name="_eventId">
+
+
+                </section>
+            </form>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+</div>
+
+
+<!--底部-->
+<div class="footer">
+    <div class="bottom">
+        盒子支付(iBOXPAY.com) © 2011-2015 版权所有 粤ICP备11030688号
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(function () {
+
+
+
+
+        //end
+    });
+
+    function checkLoginData() {
+        $("#btnEp").attr("disabled");
+        var systemName = $.trim($('#systemName').val());
+        var systemPW = $('#systemPW').val();
+        $('#systemName').val(systemName);
+
+        if (0 == $('#message').length) {
+            $('#errorMsg').after('<p id="message">${erroMsg}</p>');
+        }
+
+        if (systemName == '') {
+            $("#message").html("请输入账户名");
+            $("#btnEp").removeAttr("disabled");
+            return false;
+        }
+
+        if (systemPW == '') {
+            $("#message").html("请输入密码");
+            $("#btnEp").removeAttr("disabled");
+            return false;
+        }
+
+        if (verifyCode == '') {
+            $("#message").html("请输入验证码");
+            $("#btnEp").removeAttr("disabled");
+            return false;
+        }
+
+        if (null != $('#verifyCode') && $('#verifyCode').length > 0) {
+            var verifyCode = $.trim($('#verifyCode').val());
+            $('#verifyCode').val(verifyCode);
+            if ('' == verifyCode) {
+                $("#message").html("请输入验证码");
+                $("#btnEp").removeAttr("disabled");
+                return false;
+            }
+
+            var patrn = /^[a-zA-Z0-9]{4}$/;
+            if (!patrn.exec(verifyCode)) {
+                $("#message").html("验证码格式非法");
+                $("#btnEp").removeAttr("disabled");
+                return false;
+            }
+        }
+
+        $("#message").html("");
+        if ($('#isEncrypt').val() != '1') {
+            $('#systemPW').val(hex_md5($('#systemPW').val(), 1));
+            $('#isEncrypt').val('1');
+        }
+
+        return true;
+    }
+
+
+</script>
+
+</body>
+</html>

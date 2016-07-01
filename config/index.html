@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <title>盒子支付大数据</title>
+    <link rel="stylesheet" type="text/css" href="css/heard_bottom.css"/>
+    <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="js/UtilTool.js"></script>
+</head>
+<body>
+<!--头部-->
+<div class="hear">
+    <div class="hear_top"></div>
+    <div class="hear_nav">
+        <div class="hear_navlist">
+
+            <div class="hear_logo"><img src="images/ibox_logo.png"/></div>
+            <ul>
+                <li class="qianhe_cur"><a href="#">钱包配置</a></li>
+                <li class=""><a href="appindex.html">钱包首页配置</a></li>
+            </ul>
+            <div class="clear"></div>
+            <div class="nav_right">perAdmin[权限系统管理角色] <span class="fenxian">|</span> <a href="#">[退出]</a></div>
+        </div>
+    </div>
+</div>
+
+<!--end-->
+<div class="main">
+    <div class="main_left">
+        <div class="ianhe_left_nav">
+            <div class="nav_sub">
+                <p class="rzgl clicknav"><span>错误码配置</span></p>
+                <ul>
+                    <li class="errorStat">查看错误码</li>
+                </ul>
+            </div>
+            <div class="nav_sub">
+                <p class="rzgl clicknav"><span>网关配置</span></p>
+                <ul>
+                    <li class="gateway">查看网关</li>
+                </ul>
+            </div>
+            <div class="nav_sub">
+                <p class="rzgl clicknav"><span>钱包app配置</span></p>
+                <ul>
+                    <li class="appindex">首页</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="main_right">
+        <div id="main_content">
+
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+
+
+<!--底部-->
+<div class="footer">
+    <div class="bottom">
+        盒子支付(iBOXPAY.com) © 2011-2015 版权所有 粤ICP备11030688号
+    </div>
+</div>
+
+<div class="mark"></div>
+<script type="text/javascript">
+    $(function () {
+        //left菜单
+        $(".clicknav").click(function () {
+            var ind = $(this).parent("div").index() + 1;
+            $(this).attr("id", "cur_title" + ind);
+            $(this).next("ul").slideDown();
+            $(this).parent().siblings("div").find("p").removeAttr("id");
+            $(this).parent().siblings("div").find("ul").slideUp();
+
+        });
+
+        //查看错语码
+        $(".errorStat").click(function () {
+            $(this).addClass("er_nav");
+            $(this).siblings("li").removeClass("er_nav");
+            $("#main_content").empty().load("errorCode.html");
+        });
+       //查看网关
+        $(".gateway").click(function () {
+            $(this).addClass("er_nav");
+            $(this).siblings("li").removeClass("er_nav");
+            $("#main_content").empty().load("gateway.html");
+        });
+
+        //app首页
+        $(".appindex").click(function () {
+            $(this).addClass("er_nav");
+            $(this).siblings("li").removeClass("er_nav");
+            $("#main_content").empty().load("appindex.html");
+        });
+
+    });
+
+
+</script>
+
+</body>
+</html>

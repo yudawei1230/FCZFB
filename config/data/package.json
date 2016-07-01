@@ -1,0 +1,142 @@
+{
+    "name": "默认主题",
+    "pages": [
+        {
+            "version": 2,
+            "menu": {
+                "type": 1,
+                "index": 0,
+                "title": "首页",
+                "icon": "xxxx.png",
+                "iconChecked": "xxxx.png",
+                "textColor": "#ddbdce",
+                "textColorChecked": "#adbed",
+                "checked": true
+            },
+            "areas": [
+                {
+                    "type": 1,
+                    "index": 0,
+                    "columns": 4,
+                    "blocks": [
+                        {
+                            "icon": "xxxxx.jpg",
+                            "uri": "http://ad.iboxpay.com/wallet/production_intro.html"
+                        },
+                        {
+                            "icon": "xxxxx.jpg",
+                            "uri": "http://ad.iboxpay.com/wallet/production_intro.html"
+                        },
+                        {
+                            "icon": "xxxxx.jpg",
+                            "uri": "http://ad.iboxpay.com/wallet/production_intro.html"
+                        }
+                    ]
+                },
+                {
+                    "type": 2,
+                    "columns": 3,
+                    "blocks": [
+                        {
+                            "title": "扫一扫",
+                            "icon": "xxxxx.jpg",
+                            "uri": "http://ad.iboxpay.com/wallet/production_intro.html",
+                            "badge": "xxxx.icon"
+                        },
+                        {
+                            "title": "扫一扫",
+                            "icon": "xxxxx.jpg",
+                            "uri": "http://ad.iboxpay.com/wallet/production_intro.html",
+                            "badge": "xxxx.icon"
+                        },
+                        {
+                            "title": "扫一扫",
+                            "icon": "xxxxx.jpg",
+                            "uri": "http://ad.iboxpay.com/wallet/production_intro.html",
+                            "badge": "xxxx.icon"
+                        }
+                    ]
+                },
+                {
+                    "type": 3,
+                    "columns": 2,
+                    "blocks": [
+                        {
+                            "title": "新人专享",
+                            "desc": "领取5000红包",
+                            "icon": "xxxxx.jpg",
+                            "uri": "http://ad.iboxpay.com/wallet/production_intro.html",
+                            "badge": "xxxx.icon"
+                        },
+                        {
+                            "title": "会赚钱",
+                            "desc": "年华率17%",
+                            "icon": "xxxxx.jpg",
+                            "uri": "http://ad.iboxpay.com/wallet/production_intro.html",
+                            "badge": "xxxx.icon"
+                        },
+                        {
+                            "title": "会赚钱",
+                            "desc": "年华率17%",
+                            "icon": "xxxxx.jpg",
+                            "uri": "http://ad.iboxpay.com/wallet/production_intro.html",
+                            "badge": "xxxx.icon"
+                        }
+                    ]
+                },
+                {
+                    "type": 4,
+                    "columns": 4,
+                    "blocks": [
+                        {
+                            "title": "保险超市",
+                            "icon": "xxxxx.jpg",
+                            "uri": "http://ad.iboxpay.com/wallet/production_intro.html",
+                            "badge": "xxxx.icon"
+                        },
+                        {
+                            "title": "扫一扫",
+                            "icon": "xxxxx.jpg",
+                            "uri": "http://ad.iboxpay.com/wallet/production_intro.html",
+                            "badge": "xxxx.icon"
+                        },
+                        {
+                            "title": "扫一扫",
+                            "icon": "xxxxx.jpg",
+                            "uri": "http://ad.iboxpay.com/wallet/production_intro.html",
+                            "badge": "xxxx.icon"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "version": 2,
+            "menu": {
+                "type": 2,
+                "index": 1,
+                "title": "理财",
+                "icon": "xxxx.png",
+                "icon_checked": "xxxx.png",
+                "text_color": "#ddbdce",
+                "text_color_checked": "#adbed",
+                "checked": false
+            },
+            "areas": []
+        },
+        {
+            "version": 3,
+            "menu": {
+                "type": 4,
+                "index": 3,
+                "title": "我的",
+                "icon": "xxxx.png",
+                "icon_checked": "xxxx.png",
+                "text_color": "#ddbdce",
+                "text_color_checked": "#adbed",
+                "checked": false
+            },
+            "areas": []
+        }
+    ]
+}

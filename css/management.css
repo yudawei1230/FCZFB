@@ -33,16 +33,14 @@ form{
 	flex: 1;
 	align-content: center;
 }
-.cols *{
-	display:flex;
-	flex:2;
-	justify-content: space-around
-}
 .cols p{
 	margin: 0;
-	display:flex;
-	flex:1;
-	width:10rem;
+	width: 10rem;
+	padding-right:1rem;
+}
+.cols input,select{
+	margin: 0;
+	width: 20rem;
 	padding-right:1rem;
 }
 .cols button{
@@ -57,10 +55,16 @@ table th,td{
 	border: 1px solid #ddd;
 	text-align: center;
 }
-td *{
-	margin: 0 auto;
-	display: inline-block !important;
-	margin : 0 2rem;
+.new{
+	float:left;
+	padding-left: 20px;
+}
+.time{
+	float: right;
+	padding-right: 20px;
+}
+.time a{
+	padding-left: 20px;
 }
 
 

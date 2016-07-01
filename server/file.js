@@ -9,6 +9,7 @@
 				else{
 		        	res.writeHead(200, {'Content-Type': 'image/'+type});
 	        		res.write(file,'binary');
+	        		res.end();  
 				}
 			});
 		else

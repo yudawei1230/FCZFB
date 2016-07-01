@@ -1,0 +1,118 @@
+<div class="serc_if">
+    <form>
+        <div class="first_ser first_ser1">
+            <p>
+                错误描述（对内部）：<input type="text" id="errorDescInternal">
+            </p>
+
+            <p>
+                错误描述（对用户)：<input type="text" id="errorDescToUser">
+            </p>
+
+            <p>
+                钱包错误码：<input type="text" id="errorCode">
+            </p>
+
+            <p>
+                <button type="button" id="serch_bt">查询</button>
+                <button type="reset" id="reset">清空条件</button>
+                <button type="button" class="addway">添加</button>
+            </p>
+        </div>
+
+        <div class="clear"></div>
+    </form>
+</div>
+<div class="shanhuhouyuebiao">
+    <div id="container">
+        <table align="center" cellspacing="1" bgcolor="#cccccc" width="800">
+            <caption>错误码配置</caption>
+            <thead>
+            <th height="36" width="200" align="center" bgcolor="#fafafa">错误描述（对内部）</th>
+            <th height="36" width="200" align="center" bgcolor="#fafafa">错误描述（对用户)</th>
+            <th height="36" width="200" align="center" bgcolor="#fafafa">钱包错误码</th>
+            <th height="36" width="200" align="center"  bgcolor="#fafafa">操作</th>
+            </thead>
+            <tbody id="tabl_dishis">
+
+            </tbody>
+
+        </table>
+        <div class="page_f"><span class="prepage">上一页</span> <span class="nextpage">下一页</span></div>
+    </div>
+    <div class="loadimg">
+        <img src="images/load.gif">
+    </div>
+</div>
+<!--添加-->
+<div class="addgetway" style="height: 200px">
+    <p>
+        错误描述（对内部）：<input type="text" class="errorDescInternal">
+    </p>
+
+    <p>
+        错误描述（对用户)：<input type="text" class="errorDescToUser">
+    </p>
+
+    <p>
+        钱包错误码：<input type="text" class="errorCode">
+    </p>
+
+    <p>
+
+        <button type="button" class="addwaycir">确定</button>
+        <button type="button" class="cances">取消</button>
+    </p>
+</div>
+<!--编辑-->
+<div class="editgetway" id="editgetway" style="height: 200px">
+
+</div>
+
+<script type="text/template" id="erortpl">
+    <% _.each(errorCode,function(errorCodeList){%>
+    <tr>
+
+        <td height="36" width="" align="center" bgcolor="#ffffff"><%=errorCodeList.errorDescInternal %></td>
+        <td height="36" width="" align="center" bgcolor="#ffffff"><%=errorCodeList.errorDescToUser %></td>
+        <td height="36" width="" align="center" bgcolor="#ffffff"><%=errorCodeList.errorCode %></td>
+        <td height="36" width="" align="center" bgcolor="#ffffff"><span class="edit" id="<%=errorCodeList.errorCode%>">编辑</span></td>
+    </tr>
+<% })%>
+</script>
+<script type="text/template" id="editpl">
+    <% _.each(errorCode,function(errorCodeList){ %>
+    <input type="hidden" class="id_errorCode" value="<%=errorCodeList.errorCode%>" readonly>
+    <p>
+        错误描述（对内部）：<input type="text" class="errorDescInternal_e" value="<%=errorCodeList.errorDescInternal%>" readonly>
+    </p>
+
+    <p>
+        错误描述（对用户)：<input type="text" class="errorDescToUser_e" value="<%=errorCodeList.errorDescToUser%>">
+    </p>
+
+    <p>
+        钱包错误码：<input type="text" class="errorCode_e" value="<%=errorCodeList.errorCode%>">
+    </p>
+
+    <% })%>
+
+    <p>
+        <button type="button" class="editwaycir">确定</button>
+        <button type="button" class="cances">取消</button>
+    </p>
+</script>
+<script type="text/javascript" src="js/underscore.js"></script>
+<script type="text/javascript" src="js/backbone-min.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript" src="script/errorCode.js"></script>
+
+
+
+
+
+
+  
+  
+
+

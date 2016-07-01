@@ -17,5 +17,7 @@ http.createServer(function(req,res){
 		post.changeStatus(req,res);
 	else if(req.url =='/api/xwdc/upload')
 		post.upload(req,res);
+	else
+		res.end()
 }).listen(port);
 console.log('listen in port '+port+' !')

@@ -1,0 +1,224 @@
+<div class="serc_if">
+    <form>
+        <div class="first_ser first_ser1">
+            <p>
+                业务接口url：<input type="text" id="serviceUrl">
+            </p>
+
+            <p>
+                业务描述：<input type="text" id="serviceDescribe">
+            </p>
+            <p>
+                <button type="button" id="serch_bt">查询</button>
+                <button type="reset" id="reset">清空条件</button>
+                <button type="button" class="addway">添加</button>
+            </p>
+        </div>
+        <div class="first_ser first_ser2">
+            <p>
+                moduleId：<input type="text" id="moduleId">
+            </p>
+
+            <p>
+                serviceId：<input type="text" id="serviceId">
+            </p>
+
+            <p>
+                processId：<input type="text" id="processId">
+            </p>
+        </div>
+        <div class="clear"></div>
+    </form>
+</div>
+<div class="shanhuhouyuebiao">
+    <div id="container">
+        <table align="center" cellspacing="1" bgcolor="#cccccc" width="1200">
+            <caption>网关配置</caption>
+            <thead>
+            <th height="36" width="50" align="center" bgcolor="#fafafa">ID</th>
+            <th height="36" width="200" align="center" bgcolor="#fafafa">接口url</th>
+            <th height="36" width="200" align="center" bgcolor="#fafafa">描述</th>
+            <th height="36" width="50" align="center" bgcolor="#fafafa">模块Id</th>
+            <th height="36" width="50" align="center" bgcolor="#fafafa">接口id</th>
+            <th height="36" width="100" align="center" bgcolor="#fafafa">接口处理id</th>
+            <th height="36" width="50" align="center" bgcolor="#fafafa">状态</th>
+            <th height="36" width="100" align="center" bgcolor="#fafafa">是否检查登录</th>
+            <th height="36" width="100" align="center" bgcolor="#fafafa">是否检查ip</th>
+            <th height="36" width="100" align="center" bgcolor="#fafafa">是否关闭服务</th>
+            <th height="36" width="200" align="center" colspan="2" bgcolor="#fafafa">操作</th>
+            </thead>
+            <tbody id="tabl_dishis">
+
+            </tbody>
+        </table>
+    </div>
+    <div class="loadimg">
+        <img src="images/load.gif">
+    </div>
+</div>
+<!--添加-->
+<div class="addgetway">
+    <p>
+        业务接口url：<input type="text" class="serviceUrl">
+    </p>
+
+    <p>
+        业务描述：<input type="text" class="serviceDescribe">
+    </p>
+
+    <p>
+        moduleId：<input type="text" class="moduleId">
+    </p>
+
+    <p>
+        serviceId：<input type="text" class="serviceId">
+    </p>
+
+    <p>
+        processId：<input type="text" class="processId">
+    </p>
+
+    <p>
+        状态：<input type="text" class="status">
+    </p>
+
+    <p>
+        是否检查登录：<input type="text" class="isLoginCheck">
+    </p>
+
+    <p>
+        是否检查ip：<input type="text" class="isIpCheck">
+    </p>
+
+    <p>
+        是否关闭服务：<input type="text" class="serviceSwitch">
+    </p>
+
+    <p>
+
+        <button type="button" class="addwaycir">确定</button>
+        <button type="button" class="cances">取消</button>
+    </p>
+</div>
+<!--编辑-->
+<div class="editgetway" id="editgetway">
+    <p>
+        业务接口url：<input type="text" class="serviceUrl">
+    </p>
+
+    <p>
+        业务描述：<input type="text" class="serviceDescribe">
+    </p>
+
+    <p>
+        moduleId：<input type="text" class="moduleId">
+    </p>
+
+    <p>
+        serviceId：<input type="text" class="serviceId">
+    </p>
+
+    <p>
+        processId：<input type="text" class="processId">
+    </p>
+
+    <p>
+        状态：<input type="text" class="status">
+    </p>
+
+    <p>
+        是否检查登录：<input type="text" class="isLoginCheck">
+    </p>
+
+    <p>
+        是否检查ip：<input type="text" class="isIpCheck">
+    </p>
+
+    <p>
+        是否关闭服务：<input type="text" class="serviceSwitch">
+    </p>
+
+    <p>
+
+        <button type="button" class="editwaycir">确定</button>
+        <button type="button" class="cances">取消</button>
+    </p>
+</div>
+
+<script type="text/template" id="gattpl">
+  <% _.each(gateway,function(list){ %>
+    <tr>
+        <td height="36" width="" align="center" bgcolor="#ffffff"><%=list.id%></td>
+        <td height="36" width="" align="center" bgcolor="#ffffff"><%=list.serviceUrl%></td>
+        <td height="36" width="" align="center" bgcolor="#ffffff"><%=list.serviceDescribe%></td>
+        <td height="36" width="" align="center" bgcolor="#ffffff"><%=list.moduleId%></td>
+        <td height="36" width="" align="center" bgcolor="#ffffff"><%=list.serviceId%></td>
+        <td height="36" width="" align="center" bgcolor="#ffffff"><%=list.processId%></td>
+        <td height="36" width="" align="center" bgcolor="#ffffff"><%=list.status%></td>
+        <td height="36" width="" align="center" bgcolor="#ffffff"><%=list.isLoginCheck%></td>
+        <td height="36" width="" align="center" bgcolor="#ffffff"><%=list.isIpCheck%></td>
+        <td height="36" width="" align="center" bgcolor="#ffffff"><%=list.serviceSwitch%></td>
+        <td height="36" width="" align="center" bgcolor="#ffffff"><span class="delet" id="<%=list.id%>">删除</span></td>
+        <td height="36" width="" align="center" bgcolor="#ffffff"><span class="edit" id="<%=list.id%>">编辑</span></td>
+    </tr>
+<% })%>
+</script>
+<script type="text/template" id="editpl">
+    <% _.each(editway,function(list){ %>
+    <input type="hidden" class="id_e" value="<%=list.id%>" readonly>
+    <p>
+        业务接口url：<input type="text" class="serviceUrl_e" value="<%=list.serviceUrl%>" readonly>
+    </p>
+
+    <p>
+        业务描述：<input type="text" class="serviceDescribe_e" value="<%=list.serviceDescribe%>">
+    </p>
+
+    <p>
+        moduleId：<input type="text" class="moduleId_e" value="<%=list.moduleId%>">
+    </p>
+
+    <p>
+        serviceId：<input type="text" class="serviceId_e" value="<%=list.serviceId%>">
+    </p>
+
+    <p>
+        processId：<input type="text" class="processId_e" value="<%=list.processId%>">
+    </p>
+
+    <p>
+        状态：<input type="text" class="status_e" value="<%=list.status%>">
+    </p>
+
+    <p>
+        是否检查登录：<input type="text" class="isLoginCheck_e" value="<%=list.isLoginCheck%>">
+    </p>
+
+    <p>
+        是否检查ip：<input type="text" class="isIpCheck_e" value="<%=list.isIpCheck%>">
+    </p>
+
+    <p>
+        是否关闭服务：<input type="text" class="serviceSwitch_e" value="<%=list.serviceSwitch%>">
+    </p>
+    <% })%>
+
+    <p>
+        <button type="button" class="editwaycir">确定</button>
+        <button type="button" class="cances">取消</button>
+    </p>
+</script>
+<script type="text/javascript" src="js/underscore.js"></script>
+<script type="text/javascript" src="js/backbone-min.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript" src="script/gateway.js"></script>
+
+
+
+
+
+
+  
+  
+
+

@@ -103,7 +103,7 @@ var mySwiper = new Swiper('.swiper-container', {
 		return{
 			post:function(scope){
 				$http.post('/api/xwdc/orderSubmit',scope.inputs).success(function(data,header,config,status){
-					if(data.uuid&&data.E0019){
+					if(data.uuid&&data.S0019){
 						scope.success.orderNum = data.uuid;
 						mySwiper.slideTo(5, 200, false);
 					}
@@ -153,7 +153,7 @@ var mySwiper = new Swiper('.swiper-container', {
 						ngAjax.post(scope);
 					}
 					scope.orderhref = function(){
-						window.location.href= '/order?orderNum='+scope.success.orderNum;
+						window.location.href= '/orderCheck.html?uuid='+scope.success.orderNum;
 					}
 			}
 		}

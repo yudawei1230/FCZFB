@@ -30,9 +30,21 @@ body{
 	padding: 0.1rem 0.3rem;
 }
 .status2{
+	border: 2px solid #C88813;
+	border-radius: 8px;
+	color: #C88813;
+	padding: 0.1rem 0.3rem;
+}
+.status3{
 	border: 2px solid #0E901E;
 	border-radius: 8px;
 	color: #0E901E;
+	padding: 0.1rem 0.3rem;
+}
+.status4{
+	border: 2px solid red;
+	border-radius: 8px;
+	color: red;
 	padding: 0.1rem 0.3rem;
 }
 .order_Cell{
