@@ -41,7 +41,7 @@
                     <div class="areas index1" style='order:{{page.pages[0].areas[1].index}}'>
                         <div class="area_type2_part">
                             <ul>                        
-                                <area1 ng-repeat='item in page.pages[0].areas[1].blocks' block='item' area='page.pages[0].areas[1]' choice='choice'></area1>
+                                <area1 ng-repeat='item in page.pages[0].areas[1].blocks' block='item' area='page.pages[0].areas[1]' choice='choice' ondragover="allowDrop(event)" index=    'false'></area1>
                                 <div class="clear"></div>
                             </ul>
                         </div>
@@ -50,32 +50,32 @@
 
                         <div class="area_type3_part">
                             <ul>
-                                <li class="first_li">
-                                    <p><img src="images/new_per.png"></p>
+                                <li class="first_li" ondrop="drop(event,{{page.pages[0].areas[2].type}},{{page.pages[0].areas[2].blocks[0].id}},false)" ondragover="allowDrop(event)">
+                                    <p><img src="{{page.pages[0].areas[2].blocks[0].icon}}"></p>
 
-                                    <p>新人专享</p>
+                                    <p ng-bind='page.pages[0].areas[2].blocks[0].text[0]'></p>
 
-                                    <p>领取5000元优惠券</p>
+                                    <p ng-bind='page.pages[0].areas[2].blocks[0].text[1]'></p>
                                 </li>
                                 <li class="secli">
-                                    <div class="first_li">
-                                        <div class="type3_icon"><p><img src="images/hui_zh.png"></p></div>
+                                    <div class="first_li" ondrop="drop(event,{{page.pages[0].areas[2].type}},{{page.pages[0].areas[2].blocks[1].id}},false)" ondragover="allowDrop(event)">
+                                        <div class="type3_icon"><p><img src="{{page.pages[0].areas[2].blocks[1].icon}}"></p></div>
                                         <div class="type3_det">
-                                            <p>汇赚钱</p>
+                                            <p ng-bind='page.pages[0].areas[2].blocks[1].text[0]'></p>
 
-                                            <p>收益年化14%</p>
+                                            <p ng-bind='page.pages[0].areas[2].blocks[1].text[1]'></p>
                                         </div>
                                         <div class="clear"></div>
                                     </div>
 
-                                    <div class="first_li first_li2">
+                                    <div class="first_li first_li2" ondrop="drop(event,{{page.pages[0].areas[2].type}},{{page.pages[0].areas[2].blocks[2].id}},false)" ondragover="allowDrop(event)">
                                         <div class="type3_icon">
-                                            <p><img src="images/help_h.png"></p>
+                                            <p><img src="{{page.pages[0].areas[2].blocks[2].icon}}"></p>
                                         </div>
                                         <div class="type3_det">
-                                            <p>帮你还</p>
+                                            <p ng-bind='page.pages[0].areas[2].blocks[2].text[0]'></p>
 
-                                            <p>借款就告我</p>
+                                            <p ng-bind='page.pages[0].areas[2].blocks[2].text[1]'></p>
                                         </div>
                                         <div class="clear"></div>
                                     </div>
@@ -86,48 +86,45 @@
                         </div>
 
                     </div>
-                    <div class="areas index3" style='order:{{page.pages[0].areas[3].index}}'>
+                    <div class="areas index3" style='order:{{page.pages[0].areas[3].index}}'ng-repeat='blocks in page.pages[0].areas[3].blocks'>
                         <div class="area_type4_part">
                             <ul>                        
-                                <area1 ng-repeat='item in page.pages[0].areas[3].blocks' block='item' area='page.pages[0].areas[3]' choice='choice'></area1>
+                                <area1 ng-repeat='item in blocks.block' block='item' area='page.pages[0].areas[3]' choice='choice' ondragover="allowDrop(event)" index='{{blocks.col}}'></area1>
                                 <div class="clear"></div>
                             </ul>
                         </div>
                     </div>
                     <div class="menu">
                         <ul>
-                            <li>
-                                <img src="images/icon_w.png">
+                            <li ng-repeat='item in page.pages[0].menu'>
+                                <img src="{{item.icon}}">
+                                <p ng-bind='item.title'></p>
                             </li>
-                                                        <li>
-                                <img src="images/icon_w.png">
-                            </li>
-                                                        <li>
-                                <img src="images/icon_w.png">
-                            </li>
-                                                        <li>
-                                <img src="images/icon_w.png">
-                            </li>
-
                             <div class="clear"></div>
                         </ul>
                     </div>
                 </div>
                 <div class="cofig" >
                     <input type="text" placeholder='主题名字' ng-model='page.name'>
-                    <div ng-repeat='item in page.pages[0].areas'>
+                    <div ng-repeat='item in page.pages[0].areas' ng-show='item.type!=3'>
                         <p ng-bind='item.text'></p>
                         <input type="text" placeholder='{{item.text}}' ng-model='item.index'>
                         <input type="button" value='add' ng-click='add(item.type)'>
                         <input type="button" value='delete' ng-click='delete(item.type)'>
-                        <input type="button" value='submit' ng-click='submit()'>
                     </div>
+                    <div ng-repeat='item in page.pages[0].areas[3].blocks'>
+                        <input type="button" value='增加第{{item.col}}行三级服务' ng-click='addThreeItem(item.col)'>
+                        <input type="button" value='减少第{{item.col}}行三级服务' ng-click='deleteThreeItem(item.col)'>
+                    </div>
+                    <input type="button" value='增加三级服务' ng-click='addThree()'>
+                    <input type="button" value='减少三级服务' ng-click='deleteThree()'>
+                    <input type="button" value='submit' ng-click='submit()'>
                 </div>
             </div>
         </div>
     </div>
     <div>
-        <div ng-repeat='pic in pics' ng-click='choose(pic)'>
+        <div ng-repeat='pic in pics' ng-click='choose(pic)'  ondragstart="drag(event,{{pic}})"  draggable="true">
             <img src="{{pic.icon}}" alt="">
             <p ng-bind="{{pic.text}}"></p>
         </div>

@@ -87,20 +87,22 @@ a{transition:all .2s ease-in;color:#484848;text-decoration:none}
 .alertok .alert_bt1{height:2rem;line-height:2rem;border-top:1px solid #b2b2b2;margin-top:.95rem}.alertok .alert_bt1 p{width:100%;float:left;text-align:center;font-size:.875rem;color:#ffa700}
 .mark{width:100%;height:100%;position:absolute;left:0;top:0;background-color:#000;opacity:.5;display:none;z-index:99998}
 .appcontaner{width:640px;display:flex;flex-direction:column}.appcontaner .areas{width:100%;display: flex;flex-direction:row}.appcontaner .areas .area_type1_part{width:100%}.appcontaner .areas .area_type1_part ul{width:100%}.appcontaner .areas .area_type1_part ul li{width:100%;}.appcontaner .areas .area_type1_part ul li img{width:100%;display:block}
-.appcontaner .areas .area_type2_part{width:100%;background-color:#fff;}.appcontaner .areas .area_type2_part ul{width:100%;display:flex;justify-content:space-between;}.appcontaner .areas .area_type2_part ul li{display:flex;flex:1;flex-direction:column;text-align: center;}.appcontaner .areas .area_type2_part ul li img{flex:1;display:flex;margin:0 auto}
-.appcontaner .areas .area_type3_part{background-color:#fff;display:flex;flex:1;}.appcontaner .areas .area_type3_part ul{width:100%;display:flex;}.appcontaner .areas .area_type3_part ul li.first_li{width:50%;float:left}.appcontaner .areas .area_type3_part ul li.first_li p{text-align:center}
+.appcontaner .areas .area_type2_part{width:100%;background-color:#fff;}.appcontaner .areas .area_type2_part ul{width:100%;display:flex;justify-content:space-between;}.appcontaner .areas .area_type2_part ul li{display:flex;flex:1;flex-direction:column;text-align: center;border:0px;padding:30px 0px}.appcontaner .areas .area_type2_part ul li img{flex:1;display:flex;margin:0 auto}
+.appcontaner .areas .area_type3_part{background-color:#fff;display:flex;flex:1;border-top:5px solid rgba(98, 97, 97, 0.07);border-bottom:5px solid rgba(98, 97, 97, 0.07)}.appcontaner .areas .area_type3_part ul{width:100%;display:flex;}.appcontaner .areas .area_type3_part ul li.first_li{width:50%;float:left}.appcontaner .areas .area_type3_part ul li.first_li p{text-align:center}
 .appcontaner .areas .area_type3_part ul li.first_li img{width:50%;display:block;margin:0 auto}
 .appcontaner .areas .area_type3_part ul li.secli{width:319px;float:left}.appcontaner .areas .area_type3_part ul li.secli .first_li{padding:20px 0;width:100%}.appcontaner .areas .area_type3_part ul li.secli .first_li p{text-align:center}
 .appcontaner .areas .area_type3_part ul li.secli .first_li .type3_icon{width:50%;float:left}.appcontaner .areas .area_type3_part ul li.secli .first_li .type3_icon img{width:50%;display:block;margin:0 auto}
 .appcontaner .areas .area_type3_part ul li.secli .first_li .type3_det p{text-align:left;padding-top:10px}
 .appcontaner .areas .area_type3_part ul li.secli .first_li2{;border-top:1px solid #e6e6e6}
-.appcontaner .areas .area_type4_part{width:100%;background-color:#fff;}.appcontaner .areas .area_type4_part ul{width:100%;display:flex;}.appcontaner .areas .area_type4_part ul li{display:flex;flex:1;flex-direction:column;padding:10px 0;box-shadow:1px 1px 1px #e6e6e6}.appcontaner .areas .area_type4_part ul li img{display:block;margin:0 auto}
-.appcontaner .areas .area_type4_part ul li p{text-align:center}
+.appcontaner .areas .area_type4_part{width:100%;background-color:#fff;}.appcontaner .areas .area_type4_part ul{width:100%;display:flex;}.appcontaner .areas .area_type4_part ul li{display:flex;flex:1;flex-direction:column;box-shadow:1px 1px 1px #e6e6e6}.appcontaner .areas .area_type4_part ul li img{display:block;margin:0 auto;padding-top:10px;}
+.appcontaner .areas .area_type4_part ul li p{text-align:center; padding:10px 0px}
+.appcontaner .areas .area_type4_part ul li a{position: relative;}
 .appcontaner .areas .area_type4_part ul li:last-child{border:none}
-.appcontaner .menu{width:100%;background-color:#fff;order:99;}.appcontaner .menu ul{display: flex;}.menu ul li{flex:1;display:flex;justify-content:center;padding:10px 0;}.appcontaner .menu ul li p{text-align:center}.appcontaner .menu ul li p img{margin:0 auto}
+.appcontaner .menu{width:100%;background-color:#fff;order:99;}.appcontaner .menu ul{display: flex;border:1px solid #e6e6e6}.menu ul li{flex:1;display:flex;justify-content:center;padding:5px 50px;border:0;flex-direction:column;color:rgb(237, 135, 72)}.appcontaner .menu ul li p{text-align:center}.appcontaner .menu ul li p img{margin:0 auto}
 .cofig{width:260px;position:absolute;top:20%;right:5%;background-color:#fff}.cofig .config_type{font-size:16px;color:#333;text-align:center;margin-bottom:10px}
 .cofig .chose_menu1{padding-top:10px}.cofig .chose_menu1 span{padding:2px 5px;background-color:#fff;color:#ff6d00;cursor:pointer}
 .cofig .chose_menu1 span.cur{background-color:#ff6d00;color:#fff}
 .cofig .menuitem{padding:10px 0}.cofig .menuitem p{padding:5px 0}
 .cofig .menuitem input{width:100px}
 .cofig .menulist{margin:0 auto}
+.newPng{position: absolute;top: 0;left: 0;width: 25%;padding:0 !important}
